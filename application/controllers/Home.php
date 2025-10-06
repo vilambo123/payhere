@@ -42,21 +42,30 @@ class Home extends CI_Controller {
         // Set JSON header
         header('Content-Type: application/json');
         
-        $this->load->helper('form');
-        $this->load->library('form_validation');
+        // Add error logging
+        error_log('Submit inquiry called');
+        error_log('POST data: ' . print_r($_POST, true));
+        
+        try {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-        $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
-        $this->form_validation->set_rules('loan_amount', 'Loan Amount', 'required|numeric');
-        $this->form_validation->set_rules('loan_type', 'Loan Type', 'required');
+            $this->form_validation->set_rules('name', 'Name', 'required|trim');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
+            $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
+            $this->form_validation->set_rules('loan_amount', 'Loan Amount', 'required|numeric');
+            $this->form_validation->set_rules('loan_type', 'Loan Type', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
-            echo json_encode([
-                'success' => false,
-                'message' => strip_tags(validation_errors())
-            ]);
-        } else {
+            if ($this->form_validation->run() == FALSE) {
+                $errors = validation_errors();
+                error_log('Validation errors: ' . $errors);
+                echo json_encode([
+                    'success' => false,
+                    'message' => strip_tags($errors)
+                ]);
+                return;
+            }
+            
             // Prepare data for database
             $data = [
                 'name' => $this->input->post('name'),
@@ -69,29 +78,43 @@ class Home extends CI_Controller {
                 'status' => 'pending'
             ];
 
-            try {
-                // Save to database
-                $inquiry_model = new Inquiry_model();
-                $insert_id = $inquiry_model->save($data);
-                
-                if ($insert_id) {
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Thank you! We have received your application and will contact you shortly.',
-                        'inquiry_id' => $insert_id
-                    ]);
-                } else {
-                    echo json_encode([
-                        'success' => false,
-                        'message' => 'Failed to save your inquiry. Please try again.'
-                    ]);
-                }
-            } catch (Exception $e) {
+            error_log('Data to save: ' . print_r($data, true));
+
+            // Check if database helper is loaded
+            if (!class_exists('Database')) {
+                throw new Exception('Database helper not loaded');
+            }
+
+            // Save to database
+            $inquiry_model = new Inquiry_model();
+            $insert_id = $inquiry_model->save($data);
+            
+            error_log('Insert ID: ' . $insert_id);
+            
+            if ($insert_id) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Thank you! We have received your application and will contact you shortly.',
+                    'inquiry_id' => $insert_id
+                ]);
+            } else {
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Database error: ' . $e->getMessage()
+                    'message' => 'Failed to save your inquiry. Please check database connection.'
                 ]);
             }
+        } catch (Exception $e) {
+            error_log('Exception in submit_inquiry: ' . $e->getMessage());
+            error_log('Stack trace: ' . $e->getTraceAsString());
+            
+            echo json_encode([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage(),
+                'debug' => [
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ]
+            ]);
         }
     }
 }

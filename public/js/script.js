@@ -109,23 +109,44 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
             
+            // Get the base URL dynamically
+            const baseUrl = window.location.origin + window.location.pathname.replace('index.php', '');
+            const submitUrl = baseUrl + 'index.php/submit-inquiry';
+            
+            console.log('Submitting to:', submitUrl); // Debug
+            console.log('Form data:', data); // Debug
+            
             // Send data to server
-            fetch('index.php/submit-inquiry', {
+            fetch(submitUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams(data)
             })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    formMessage.className = 'form-message success';
-                    formMessage.textContent = result.message;
-                    loanApplicationForm.reset();
-                } else {
+            .then(response => {
+                console.log('Response status:', response.status); // Debug
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.status);
+                }
+                return response.text(); // Get as text first
+            })
+            .then(text => {
+                console.log('Response text:', text); // Debug
+                try {
+                    const result = JSON.parse(text);
+                    if (result.success) {
+                        formMessage.className = 'form-message success';
+                        formMessage.textContent = result.message;
+                        loanApplicationForm.reset();
+                    } else {
+                        formMessage.className = 'form-message error';
+                        formMessage.textContent = result.message;
+                    }
+                } catch (e) {
+                    console.error('JSON parse error:', e);
                     formMessage.className = 'form-message error';
-                    formMessage.textContent = result.message;
+                    formMessage.textContent = 'Server error: ' + text.substring(0, 100);
                 }
                 
                 // Reset button
@@ -141,12 +162,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 5000);
             })
             .catch(error => {
+                console.error('Fetch error:', error); // Debug
                 formMessage.className = 'form-message error';
-                formMessage.textContent = 'An error occurred. Please try again later.';
+                formMessage.textContent = 'Connection error: ' + error.message + '. Please check your database connection.';
                 
                 // Reset button
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
+                
+                // Scroll to message
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             });
         });
     }
