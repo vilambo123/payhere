@@ -19,32 +19,24 @@ spl_autoload_register(function ($class) {
 
 // Base Controller
 class CI_Controller {
+    public $load;
+    public $input;
+    public $form_validation;
+    
     public function __construct() {
-        // Initialize
+        // Initialize core components
+        $this->load = new CI_Loader();
+        $this->input = new CI_Input();
+        $this->form_validation = new CI_Form_validation();
+        
+        // Store instance for get_instance()
+        self::$instance =& $this;
     }
     
-    public function load_helper($helper) {
-        if (is_array($helper)) {
-            foreach ($helper as $h) {
-                $this->load_helper($h);
-            }
-        }
-    }
+    private static $instance;
     
-    public function load_library($library) {
-        if (is_array($library)) {
-            foreach ($library as $l) {
-                $this->load_library($l);
-            }
-        }
-    }
-    
-    public function load_view($view, $data = array()) {
-        extract($data);
-        $view_file = VIEWPATH.str_replace('.', '/', $view).'.php';
-        if (file_exists($view_file)) {
-            include $view_file;
-        }
+    public static function &get_instance() {
+        return self::$instance;
     }
 }
 
@@ -80,8 +72,7 @@ function base_url($uri = '') {
 }
 
 function &get_instance() {
-    static $instance;
-    return $instance;
+    return CI_Controller::get_instance();
 }
 
 // Simple Input class
@@ -177,9 +168,6 @@ if (!empty($uri)) {
 $controller = ucfirst($controller);
 if (class_exists($controller)) {
     $instance = new $controller();
-    $instance->load = new CI_Loader();
-    $instance->input = new CI_Input();
-    $instance->form_validation = new CI_Form_validation();
     
     if (method_exists($instance, $method)) {
         $instance->$method();
