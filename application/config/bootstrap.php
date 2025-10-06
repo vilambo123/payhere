@@ -8,12 +8,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Load configuration
 require_once APPPATH.'config/config.php';
 require_once APPPATH.'config/routes.php';
+require_once APPPATH.'config/database_helper.php';
 
-// Simple autoloader for controllers
+// Simple autoloader for controllers and models
 spl_autoload_register(function ($class) {
+    // Try controllers first
     $file = APPPATH.'controllers/'.$class.'.php';
     if (file_exists($file)) {
         require_once $file;
+        return;
+    }
+    
+    // Try models
+    $file = APPPATH.'models/'.$class.'.php';
+    if (file_exists($file)) {
+        require_once $file;
+        return;
     }
 });
 
