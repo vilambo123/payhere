@@ -238,20 +238,24 @@
             <form id="loanApplicationForm">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="name">Full Name (as per IC) *</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g., Ahmad bin Abdullah">
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required placeholder="e.g., ahmad@email.com">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <label for="phone">Phone Number (Malaysian) *</label>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="e.g., 012-345-6789 or +6012-345-6789"
+                               pattern="[0-9+\-\s]+"
+                               title="Malaysian phone number">
+                        <small style="color: #666; font-size: 0.85rem;">Format: 012-345-6789 or +6012-345-6789</small>
                     </div>
                     
                     <div class="form-group">
@@ -276,12 +280,18 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="loan_amount">Loan Amount (RM) *</label>
-                        <input type="number" id="loan_amount" name="loan_amount" min="5000" required>
+                        <input type="number" id="loan_amount" name="loan_amount" min="1000" required 
+                               placeholder="e.g., 50000"
+                               step="1000">
+                        <small style="color: #666; font-size: 0.85rem;">Minimum: RM 1,000</small>
                     </div>
                     
                     <div class="form-group">
                         <label for="income">Monthly Income (RM)</label>
-                        <input type="number" id="income" name="income" min="0">
+                        <input type="number" id="income" name="income" min="1000"
+                               placeholder="e.g., 5000"
+                               step="500">
+                        <small style="color: #666; font-size: 0.85rem;">Helps us assess your eligibility</small>
                     </div>
                 </div>
                 

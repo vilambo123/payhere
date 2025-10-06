@@ -89,13 +89,248 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateMonthlyPayment();
     }
     
+    // Malaysian Validation Functions
+    function validateMalaysianPhone(phone) {
+        // Remove spaces, dashes, and plus signs for validation
+        const cleanPhone = phone.replace(/[\s\-\+]/g, '');
+        
+        // Malaysian phone patterns:
+        // Mobile: 01x-xxxx-xxxx (10-11 digits starting with 01)
+        // Landline: 0x-xxxx-xxxx (9-10 digits starting with 0)
+        // With country code: +60x-xxxx-xxxx or 60x-xxxx-xxxx
+        
+        const patterns = [
+            /^01[0-9]{8,9}$/,           // 01xxxxxxxx or 01xxxxxxxxx
+            /^0[2-9][0-9]{7,8}$/,       // 0xxxxxxxx or 0xxxxxxxxx (landline)
+            /^601[0-9]{8,9}$/,          // 601xxxxxxxx (with country code, no +)
+            /^60[2-9][0-9]{7,8}$/       // 60xxxxxxxx (landline with country code)
+        ];
+        
+        return patterns.some(pattern => pattern.test(cleanPhone));
+    }
+    
+    function validateMalaysianIC(ic) {
+        // Malaysian IC format: YYMMDD-PB-###G
+        // Remove dashes for validation
+        const cleanIC = ic.replace(/[\s\-]/g, '');
+        
+        // Must be exactly 12 digits
+        if (!/^[0-9]{12}$/.test(cleanIC)) {
+            return false;
+        }
+        
+        // Validate date part (YYMMDD)
+        const year = parseInt(cleanIC.substring(0, 2));
+        const month = parseInt(cleanIC.substring(2, 4));
+        const day = parseInt(cleanIC.substring(4, 6));
+        
+        if (month < 1 || month > 12) return false;
+        if (day < 1 || day > 31) return false;
+        
+        // Validate place of birth code (must be valid Malaysian state code)
+        const birthPlace = parseInt(cleanIC.substring(6, 8));
+        const validStateCodes = [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, // Original states
+            11, 12, 13, 14, 15, 16,         // Additional states
+            21, 22, 23, 24,                 // Born in other countries
+            59, 60,                         // Unknown/special cases
+            71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82 // Other categories
+        ];
+        
+        return validStateCodes.includes(birthPlace) || (birthPlace >= 1 && birthPlace <= 82);
+    }
+    
+    function validateMalaysianPostcode(postcode) {
+        // Malaysian postcode: 5 digits
+        const cleanPostcode = postcode.replace(/\s/g, '');
+        return /^[0-9]{5}$/.test(cleanPostcode);
+    }
+    
+    function formatMalaysianPhone(phone) {
+        // Format phone number for display
+        const cleanPhone = phone.replace(/[\s\-\+]/g, '');
+        
+        if (cleanPhone.startsWith('60')) {
+            // With country code
+            if (cleanPhone.length === 11 || cleanPhone.length === 12) {
+                return '+' + cleanPhone.substring(0, 2) + ' ' + 
+                       cleanPhone.substring(2, 4) + '-' + 
+                       cleanPhone.substring(4, 8) + '-' + 
+                       cleanPhone.substring(8);
+            }
+        } else if (cleanPhone.startsWith('0')) {
+            // Without country code
+            if (cleanPhone.length === 10 || cleanPhone.length === 11) {
+                return cleanPhone.substring(0, 3) + '-' + 
+                       cleanPhone.substring(3, 7) + '-' + 
+                       cleanPhone.substring(7);
+            } else if (cleanPhone.length === 9) {
+                return cleanPhone.substring(0, 2) + '-' + 
+                       cleanPhone.substring(2, 6) + '-' + 
+                       cleanPhone.substring(6);
+            }
+        }
+        
+        return phone; // Return original if can't format
+    }
+    
+    function showFieldError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        if (!field) return;
+        
+        // Remove existing error
+        const existingError = field.parentElement.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Add error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.textContent = message;
+        errorDiv.style.color = '#ef4444';
+        errorDiv.style.fontSize = '0.875rem';
+        errorDiv.style.marginTop = '0.25rem';
+        
+        field.parentElement.appendChild(errorDiv);
+        field.style.borderColor = '#ef4444';
+        
+        // Focus the field
+        field.focus();
+    }
+    
+    function clearFieldError(fieldId) {
+        const field = document.getElementById(fieldId);
+        if (!field) return;
+        
+        const existingError = field.parentElement.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        field.style.borderColor = '#e2e8f0';
+    }
+    
     // Form Submission
     const loanApplicationForm = document.getElementById('loanApplicationForm');
     const formMessage = document.getElementById('formMessage');
     
     if (loanApplicationForm) {
+        // Real-time validation on phone input
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('blur', function() {
+                if (this.value) {
+                    if (!validateMalaysianPhone(this.value)) {
+                        showFieldError('phone', 'Please enter a valid Malaysian phone number (e.g., 012-345-6789 or +6012-345-6789)');
+                    } else {
+                        clearFieldError('phone');
+                        // Auto-format the phone number
+                        this.value = formatMalaysianPhone(this.value);
+                    }
+                }
+            });
+            
+            phoneInput.addEventListener('input', function() {
+                clearFieldError('phone');
+            });
+        }
+        
+        // Real-time validation on IC input (if exists)
+        const icInput = document.getElementById('ic_number');
+        if (icInput) {
+            icInput.addEventListener('blur', function() {
+                if (this.value) {
+                    if (!validateMalaysianIC(this.value)) {
+                        showFieldError('ic_number', 'Please enter a valid Malaysian IC number (e.g., 901231-01-5678)');
+                    } else {
+                        clearFieldError('ic_number');
+                    }
+                }
+            });
+            
+            icInput.addEventListener('input', function() {
+                clearFieldError('ic_number');
+            });
+        }
+        
+        // Real-time validation on postcode (if exists)
+        const postcodeInput = document.getElementById('postcode');
+        if (postcodeInput) {
+            postcodeInput.addEventListener('blur', function() {
+                if (this.value) {
+                    if (!validateMalaysianPostcode(this.value)) {
+                        showFieldError('postcode', 'Please enter a valid Malaysian postcode (5 digits, e.g., 50450)');
+                    } else {
+                        clearFieldError('postcode');
+                    }
+                }
+            });
+            
+            postcodeInput.addEventListener('input', function() {
+                clearFieldError('postcode');
+            });
+        }
+        
         loanApplicationForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Clear all previous errors
+            document.querySelectorAll('.field-error').forEach(err => err.remove());
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.style.borderColor = '#e2e8f0';
+            });
+            
+            // Validate Malaysian phone number
+            const phone = document.getElementById('phone').value;
+            if (!validateMalaysianPhone(phone)) {
+                showFieldError('phone', 'Please enter a valid Malaysian phone number (e.g., 012-345-6789 or +6012-345-6789)');
+                return;
+            }
+            
+            // Validate IC if field exists
+            const icField = document.getElementById('ic_number');
+            if (icField && icField.value) {
+                if (!validateMalaysianIC(icField.value)) {
+                    showFieldError('ic_number', 'Please enter a valid Malaysian IC number (e.g., 901231-01-5678)');
+                    return;
+                }
+            }
+            
+            // Validate postcode if field exists
+            const postcodeField = document.getElementById('postcode');
+            if (postcodeField && postcodeField.value) {
+                if (!validateMalaysianPostcode(postcodeField.value)) {
+                    showFieldError('postcode', 'Please enter a valid Malaysian postcode (5 digits)');
+                    return;
+                }
+            }
+            
+            // Validate loan amount (minimum RM 1,000)
+            const loanAmount = parseFloat(document.getElementById('loan_amount').value);
+            if (loanAmount < 1000) {
+                showFieldError('loan_amount', 'Minimum loan amount is RM 1,000');
+                return;
+            }
+            
+            // Validate monthly income if provided
+            const incomeField = document.getElementById('income');
+            if (incomeField && incomeField.value) {
+                const income = parseFloat(incomeField.value);
+                if (income < 1000) {
+                    showFieldError('income', 'Please enter a valid monthly income (minimum RM 1,000)');
+                    return;
+                }
+                
+                // Debt-to-income ratio check (loan should not exceed 10x monthly income)
+                if (loanAmount > income * 120) { // 10 years * 12 months
+                    formMessage.className = 'form-message error';
+                    formMessage.textContent = 'Warning: The loan amount seems high compared to your income. Our team will review your application.';
+                    formMessage.style.display = 'block';
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
             
             const formData = new FormData(this);
             const data = {};
