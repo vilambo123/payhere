@@ -200,10 +200,25 @@ if (!empty($uri)) {
 
 // Load and execute controller
 $controller = ucfirst($controller);
+
+// Force load the controller file if it exists
+$controller_file = APPPATH.'controllers/'.$controller.'.php';
+if (file_exists($controller_file)) {
+    require_once $controller_file;
+}
+
 if (class_exists($controller)) {
     $instance = new $controller();
     
     if (method_exists($instance, $method)) {
         $instance->$method();
+    } else {
+        // Method not found
+        header('HTTP/1.1 404 Not Found');
+        echo json_encode(['success' => false, 'message' => 'Method not found: ' . $method]);
     }
+} else {
+    // Controller not found
+    header('HTTP/1.1 404 Not Found');
+    echo json_encode(['success' => false, 'message' => 'Controller not found: ' . $controller]);
 }
