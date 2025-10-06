@@ -288,6 +288,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>IC Number</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Loan Type</th>
@@ -302,6 +303,7 @@
                     <tr>
                         <td><?php echo $inquiry['id']; ?></td>
                         <td><strong><?php echo htmlspecialchars($inquiry['name']); ?></strong></td>
+                        <td><?php echo htmlspecialchars($inquiry['ic_number'] ?? 'N/A'); ?></td>
                         <td><?php echo htmlspecialchars($inquiry['email']); ?></td>
                         <td><?php echo htmlspecialchars($inquiry['phone']); ?></td>
                         <td>

@@ -259,6 +259,18 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="ic_number">IC Number (MyKad) *</label>
+                        <input type="text" id="ic_number" name="ic_number" required 
+                               placeholder="e.g., 901231-01-5678"
+                               pattern="[0-9\-]+"
+                               maxlength="14"
+                               title="Malaysian IC Number">
+                        <small style="color: #666; font-size: 0.85rem;">Format: YYMMDD-PB-###G (e.g., 901231-01-5678)</small>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
                         <label for="loan_type">Loan Type *</label>
                         <select id="loan_type" name="loan_type" required>
                             <option value="">Select Loan Type</option>
@@ -275,9 +287,7 @@
                             ?>
                         </select>
                     </div>
-                </div>
-                
-                <div class="form-row">
+                    
                     <div class="form-group">
                         <label for="loan_amount">Loan Amount (RM) *</label>
                         <input type="number" id="loan_amount" name="loan_amount" min="1000" required 
@@ -285,7 +295,9 @@
                                step="1000">
                         <small style="color: #666; font-size: 0.85rem;">Minimum: RM 1,000</small>
                     </div>
-                    
+                </div>
+                
+                <div class="form-row">
                     <div class="form-group">
                         <label for="income">Monthly Income (RM)</label>
                         <input type="number" id="income" name="income" min="1000"
