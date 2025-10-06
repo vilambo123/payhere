@@ -8,12 +8,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Load configuration
 require_once APPPATH.'config/config.php';
 require_once APPPATH.'config/routes.php';
+require_once APPPATH.'config/database_helper.php';
 
-// Simple autoloader for controllers
+// Simple autoloader for controllers and models
 spl_autoload_register(function ($class) {
+    // Try controllers first
     $file = APPPATH.'controllers/'.$class.'.php';
     if (file_exists($file)) {
         require_once $file;
+        return;
+    }
+    
+    // Try models
+    $file = APPPATH.'models/'.$class.'.php';
+    if (file_exists($file)) {
+        require_once $file;
+        return;
     }
 });
 
@@ -45,14 +55,16 @@ class CI_Loader {
     private $ci;
     
     public function __construct() {
-        $this->ci = &get_instance();
+        // No need to get instance here, will be set by controller
     }
     
     public function helper($helper) {
+        // Helpers are already loaded via functions
         return $this;
     }
     
     public function library($library) {
+        // Libraries are already loaded
         return $this;
     }
     
@@ -63,12 +75,21 @@ class CI_Loader {
             include $view_file;
         }
     }
+    
+    public function model($model) {
+        // Model loading placeholder
+        return $this;
+    }
 }
 
 // Helper functions
 function base_url($uri = '') {
     global $config;
-    return rtrim($config['base_url'], '/').'/'.$uri;
+    $base = rtrim($config['base_url'], '/');
+    if (empty($uri)) {
+        return $base . '/';
+    }
+    return $base . '/' . ltrim($uri, '/');
 }
 
 function &get_instance() {
@@ -99,7 +120,7 @@ class CI_Form_validation {
     private $ci;
     
     public function __construct() {
-        $this->ci = &get_instance();
+        // No need to get instance here
     }
     
     public function set_rules($field, $label, $rules) {
@@ -111,16 +132,19 @@ class CI_Form_validation {
     }
     
     public function run() {
+        $this->errors = array(); // Reset errors
+        
         foreach ($this->rules as $field => $rule) {
-            $value = isset($_POST[$field]) ? $_POST[$field] : '';
+            $value = isset($_POST[$field]) ? trim($_POST[$field]) : '';
             $rules = explode('|', $rule['rules']);
             
             foreach ($rules as $r) {
+                $r = trim($r);
                 if ($r === 'required' && empty($value)) {
                     $this->errors[] = $rule['label'].' is required.';
-                } elseif ($r === 'valid_email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                } elseif ($r === 'valid_email' && !empty($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     $this->errors[] = $rule['label'].' must be a valid email.';
-                } elseif ($r === 'numeric' && !is_numeric($value)) {
+                } elseif ($r === 'numeric' && !empty($value) && !is_numeric($value)) {
                     $this->errors[] = $rule['label'].' must be numeric.';
                 }
             }
@@ -128,10 +152,20 @@ class CI_Form_validation {
         
         return empty($this->errors);
     }
+    
+    public function error_array() {
+        return $this->errors;
+    }
 }
 
-function validation_errors() {
-    // Return validation errors
+function validation_errors($prefix = '<p>', $suffix = '</p>') {
+    $CI =& get_instance();
+    if (isset($CI->form_validation)) {
+        $errors = $CI->form_validation->error_array();
+        if (!empty($errors)) {
+            return $prefix . implode($suffix . $prefix, $errors) . $suffix;
+        }
+    }
     return '';
 }
 

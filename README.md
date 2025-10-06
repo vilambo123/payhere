@@ -63,47 +63,76 @@ A modern, responsive landing page for financial loan services built with PHP usi
 ### Prerequisites
 
 - PHP 7.4 or higher
+- MySQL 5.7+ or MariaDB
 - Web server (Apache/Nginx)
+- XAMPP (for Windows) or LAMP/MAMP (for Linux/Mac)
 - mod_rewrite enabled (for Apache)
 
 ### Setup Instructions
 
-1. **Clone or download** this repository to your web server directory
+#### 1. **Setup Files**
+   - Clone or download this repository to your XAMPP `htdocs` folder
+   - For XAMPP: `C:\xampp\htdocs\payhere\`
 
-2. **Configure base URL**
+#### 2. **Database Setup**
    
-   Open `application/config/config.php` and update the base URL:
+   **Start XAMPP Services:**
+   - Open XAMPP Control Panel
+   - Start Apache and MySQL
+   
+   **Import Database:**
+   1. Open phpMyAdmin: `http://localhost/phpmyadmin`
+   2. Click on "Import" tab
+   3. Choose file: `database_setup.sql`
+   4. Click "Go" to import
+   
+   **Or manually create:**
+   1. Create database: `loan_system`
+   2. Import the SQL file
+   
+   📖 **Detailed guide:** See [INSTALLATION_DATABASE.md](INSTALLATION_DATABASE.md)
+
+#### 3. **Configure Database** (Already set for XAMPP defaults)
+   
+   Open `application/config/database.php` (only if you changed MySQL settings):
    ```php
-   $config['base_url'] = 'http://your-domain.com/';
+   $db['default'] = array(
+       'hostname' => 'localhost',
+       'username' => 'root',
+       'password' => '',  // Change if you set a MySQL password
+       'database' => 'loan_system',
+       'port' => 3306
+   );
    ```
 
-3. **Set permissions** (if on Linux/Unix)
+#### 4. **Test Database Connection**
+   
+   Visit: `http://localhost/payhere/test-database.php`
+   
+   You should see:
+   - ✅ Connection successful
+   - Database tables listed
+   - Sample inquiries
+
+#### 5. **Configure Base URL** (Auto-configured for XAMPP)
+   
+   The base URL is automatically detected. If needed, manually edit:
+   `application/config/config.php`
+
+#### 6. **Set Permissions** (Linux/Mac only)
    ```bash
    chmod -R 755 application/
    chmod -R 755 public/
    ```
 
-4. **Configure web server**
-
-   **For Apache:**
-   - Ensure `.htaccess` is present in the root directory
-   - Make sure `mod_rewrite` is enabled
+#### 7. **Access the Website**
    
-   **For Nginx:**
-   Add this to your server block:
-   ```nginx
-   location / {
-       try_files $uri $uri/ /index.php?$query_string;
-   }
+   Open your browser:
    ```
-
-5. **Access the website**
+   http://localhost/payhere/
+   ```
    
-   Open your browser and navigate to:
-   ```
-   http://localhost/
-   ```
-   or
+   Or for other servers:
    ```
    http://your-domain.com/
    ```
@@ -214,25 +243,65 @@ Edit `application/views/home/index.php` to modify:
 
 ## Form Submission
 
-The application form submits to `/submit-inquiry` endpoint. Currently, it validates and returns a JSON response. To save data:
+✅ **Fully Implemented!** The application form now:
 
-1. **Create a database table:**
-   ```sql
-   CREATE TABLE inquiries (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(100),
-       email VARCHAR(100),
-       phone VARCHAR(20),
-       loan_type VARCHAR(50),
-       loan_amount DECIMAL(10,2),
-       message TEXT,
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   ```
+1. **Validates user input** (required fields, email format, numeric amounts)
+2. **Saves to MySQL database** via the Inquiry_model
+3. **Returns JSON response** for AJAX handling
+4. **Stores metadata** (IP address, user agent, timestamp)
 
-2. **Create a model** in `application/models/Inquiry_model.php`
+### Database Tables
 
-3. **Uncomment database code** in `application/controllers/Home.php`
+The system uses these tables:
+
+- **inquiries** - Loan applications with full details
+- **loan_types** - Loan products configuration
+- **contacts** - General contact form submissions
+- **site_settings** - Website settings
+
+### View Submitted Data
+
+**Via phpMyAdmin:**
+1. Go to `http://localhost/phpmyadmin`
+2. Select `loan_system` database
+3. Browse the `inquiries` table
+
+**Via Test Page:**
+- Visit: `http://localhost/payhere/test-database.php`
+
+### API Endpoint
+
+**POST** `/submit-inquiry`
+
+**Request Body:**
+```json
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+60123456789",
+    "loan_type": "personal",
+    "loan_amount": 50000,
+    "income": 5000,
+    "message": "Need loan for business"
+}
+```
+
+**Success Response:**
+```json
+{
+    "success": true,
+    "message": "Thank you! We have received your application...",
+    "inquiry_id": 123
+}
+```
+
+**Error Response:**
+```json
+{
+    "success": false,
+    "message": "Email is required. Phone is required."
+}
+```
 
 ## Browser Support
 
