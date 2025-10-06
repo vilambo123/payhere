@@ -46,8 +46,17 @@ class Home extends CI_Controller {
         header('Content-Type: application/json');
         
         // Add error logging
-        error_log('Submit inquiry called');
+        error_log('=== Submit inquiry START ===');
         error_log('POST data: ' . print_r($_POST, true));
+        
+        // Test if POST data exists
+        if (empty($_POST)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No POST data received. Method: ' . $_SERVER['REQUEST_METHOD']
+            ]);
+            exit;
+        }
         
         try {
             $this->load->helper('form');
