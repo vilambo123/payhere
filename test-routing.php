@@ -64,26 +64,59 @@ $controller_file = 'application/controllers/' . ucfirst($controller) . '.php';
 if (file_exists($controller_file)) {
     echo "<p style='color: green;'>✅ Controller file exists: <code>$controller_file</code></p>";
     
-    // Try to load it
+    // Load bootstrap FIRST
     require_once 'application/config/bootstrap.php';
     
-    if (class_exists(ucfirst($controller))) {
-        echo "<p style='color: green;'>✅ Controller class exists: <code>" . ucfirst($controller) . "</code></p>";
+    // Force load the controller
+    require_once $controller_file;
+    
+    $class_name = ucfirst($controller);
+    if (class_exists($class_name)) {
+        echo "<p style='color: green;'>✅ Controller class exists: <code>$class_name</code></p>";
         
-        $instance = new Home();
-        if (method_exists($instance, $method)) {
-            echo "<p style='color: green;'>✅ Method exists: <code>$method()</code></p>";
-        } else {
-            echo "<p style='color: red;'>❌ Method does NOT exist: <code>$method()</code></p>";
+        try {
+            $instance = new $class_name();
+            echo "<p style='color: green;'>✅ Controller instantiated successfully</p>";
+            
+            if (method_exists($instance, $method)) {
+                echo "<p style='color: green;'>✅ Method exists: <code>$method()</code></p>";
+                
+                echo "<h3>5. Testing Method Call</h3>";
+                echo "<p>Calling method with test POST data...</p>";
+                
+                // Set test POST data
+                $_POST = [
+                    'name' => 'Test User',
+                    'email' => 'test@test.com',
+                    'phone' => '0123456789',
+                    'loan_type' => 'personal',
+                    'loan_amount' => '50000'
+                ];
+                
+                echo "<pre>POST data: " . print_r($_POST, true) . "</pre>";
+                echo "<hr>";
+                echo "<p><strong>Method Output:</strong></p>";
+                
+                // Call the method
+                $instance->$method();
+                
+                echo "<hr>";
+                echo "<p style='color: green;'>✅ Method executed</p>";
+                
+            } else {
+                echo "<p style='color: red;'>❌ Method does NOT exist: <code>$method()</code></p>";
+            }
+        } catch (Exception $e) {
+            echo "<p style='color: red;'>❌ Error instantiating controller: " . $e->getMessage() . "</p>";
         }
     } else {
-        echo "<p style='color: red;'>❌ Controller class NOT found</p>";
+        echo "<p style='color: red;'>❌ Controller class NOT found after loading file</p>";
     }
 } else {
     echo "<p style='color: red;'>❌ Controller file NOT found: <code>$controller_file</code></p>";
 }
 
-echo "<h3>5. Direct URL Test</h3>";
+echo "<h3>6. Direct URL Test</h3>";
 $submit_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php/submit-inquiry';
 echo "<p>Try this URL directly:</p>";
 echo "<p><a href='$submit_url' target='_blank'>$submit_url</a></p>";
