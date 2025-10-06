@@ -177,9 +177,14 @@
     <div class="header">
         <h1><i class="fas fa-chart-line"></i> Admin Dashboard</h1>
         <p class="subtitle">Manage loan inquiries and applications</p>
-        <a href="<?php echo base_url(); ?>" class="back-link">
-            <i class="fas fa-arrow-left"></i> Back to Website
-        </a>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <a href="<?php echo base_url(); ?>" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Website
+            </a>
+            <a href="<?php echo base_url('index.php/settings'); ?>" class="back-link">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </div>
     </div>
     
     <div class="container">
