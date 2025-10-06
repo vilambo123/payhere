@@ -4,6 +4,10 @@
  * Test your MySQL/phpMyAdmin connection
  */
 ?>
+<?php
+// Define BASEPATH to prevent "No direct script access allowed" error
+define('BASEPATH', __DIR__ . '/');
+?>
 <!DOCTYPE html>
 <html>
 <head>

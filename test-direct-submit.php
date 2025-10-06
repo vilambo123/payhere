@@ -4,6 +4,9 @@
  * Tests the submit-inquiry endpoint directly
  */
 
+// Define BASEPATH to prevent "No direct script access allowed" error
+define('BASEPATH', __DIR__ . '/');
+
 // Test data
 $testData = [
     'name' => 'Ahmad bin Abdullah',
