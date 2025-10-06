@@ -147,9 +147,18 @@ class Home extends CI_Controller {
                 'success' => false,
                 'message' => 'Error: ' . $e->getMessage(),
                 'debug' => [
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine()
+                    'file' => basename($e->getFile()),
+                    'line' => $e->getLine(),
+                    'trace' => $e->getTraceAsString()
                 ]
+            ]);
+        }
+        
+        // Make sure script stops here
+        exit;
+    }
+}
+]
             ]);
         }
     }

@@ -368,20 +368,51 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(text => {
                 console.log('Response text:', text); // Debug
+                console.log('Response length:', text.length); // Debug
+                
+                // Check if response is empty
+                if (!text || text.trim().length === 0) {
+                    throw new Error('Empty response from server. Please check if MySQL is running and database is connected.');
+                }
+                
                 try {
                     const result = JSON.parse(text);
+                    console.log('Parsed result:', result); // Debug
+                    
                     if (result.success) {
                         formMessage.className = 'form-message success';
                         formMessage.textContent = result.message;
+                        formMessage.style.display = 'block';
                         loanApplicationForm.reset();
+                        
+                        // Scroll to success message
+                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         formMessage.className = 'form-message error';
                         formMessage.textContent = result.message;
+                        formMessage.style.display = 'block';
+                        
+                        // Scroll to error message
+                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 } catch (e) {
                     console.error('JSON parse error:', e);
+                    console.error('Response text:', text);
+                    
                     formMessage.className = 'form-message error';
-                    formMessage.textContent = 'Server error: ' + text.substring(0, 100);
+                    
+                    // More helpful error message
+                    if (text.includes('Fatal error')) {
+                        formMessage.textContent = 'Server Error: PHP Fatal Error. Check error logs or test-form-submit.php for details.';
+                    } else if (text.includes('Warning')) {
+                        formMessage.textContent = 'Server Warning: ' + text.substring(0, 200);
+                    } else if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+                        formMessage.textContent = 'Server returned HTML instead of JSON. The page may have redirected or encountered an error.';
+                    } else {
+                        formMessage.textContent = 'Invalid server response. Response: ' + text.substring(0, 150);
+                    }
+                    
+                    formMessage.style.display = 'block';
                 }
                 
                 // Reset button
@@ -399,14 +430,27 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Fetch error:', error); // Debug
                 formMessage.className = 'form-message error';
-                formMessage.textContent = 'Connection error: ' + error.message + '. Please check your database connection.';
+                
+                // More specific error messages
+                if (error.message.includes('Empty response')) {
+                    formMessage.innerHTML = '<strong>Connection Error:</strong><br>' +
+                        '1. Check if MySQL is running in XAMPP<br>' +
+                        '2. Check if database "loan_system" exists<br>' +
+                        '3. Try visiting: <a href="test-form-submit.php" target="_blank">test-form-submit.php</a>';
+                } else if (error.message.includes('Network')) {
+                    formMessage.textContent = 'Network error: Cannot reach server. Check if Apache is running in XAMPP.';
+                } else {
+                    formMessage.textContent = 'Error: ' + error.message;
+                }
+                
+                formMessage.style.display = 'block';
                 
                 // Reset button
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
                 
                 // Scroll to message
-                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
     }
