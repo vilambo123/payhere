@@ -8,6 +8,11 @@
 // Define BASEPATH to prevent "No direct script access allowed" error
 define('BASEPATH', __DIR__ . '/');
 
+// Define APPPATH constant
+if (!defined('APPPATH')) {
+    define('APPPATH', __DIR__ . '/application/');
+}
+
 // Define ENVIRONMENT constant
 if (!defined('ENVIRONMENT')) {
     define('ENVIRONMENT', 'development');
