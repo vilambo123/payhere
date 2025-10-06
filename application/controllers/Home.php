@@ -45,11 +45,7 @@ class Home extends CI_Controller {
         // Set JSON header
         header('Content-Type: application/json');
         
-        // Add error logging
-        error_log('=== Submit inquiry START ===');
-        error_log('POST data: ' . print_r($_POST, true));
-        
-        // Test if POST data exists
+        // Check if POST data exists
         if (empty($_POST)) {
             echo json_encode([
                 'success' => false,
@@ -123,8 +119,6 @@ class Home extends CI_Controller {
                 'status' => 'pending'
             ];
 
-            error_log('Data to save: ' . print_r($data, true));
-
             // Check if database helper is loaded
             if (!class_exists('Database')) {
                 throw new Exception('Database helper not loaded');
@@ -133,8 +127,6 @@ class Home extends CI_Controller {
             // Save to database
             $inquiry_model = new Inquiry_model();
             $insert_id = $inquiry_model->save($data);
-            
-            error_log('Insert ID: ' . $insert_id);
             
             if ($insert_id) {
                 echo json_encode([
@@ -149,17 +141,12 @@ class Home extends CI_Controller {
                 ]);
             }
         } catch (Exception $e) {
-            error_log('Exception in submit_inquiry: ' . $e->getMessage());
-            error_log('Stack trace: ' . $e->getTraceAsString());
+            // Log error for debugging
+            error_log('Submit inquiry error: ' . $e->getMessage());
             
             echo json_encode([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage(),
-                'debug' => [
-                    'file' => basename($e->getFile()),
-                    'line' => $e->getLine(),
-                    'trace' => $e->getTraceAsString()
-                ]
+                'message' => 'Error: ' . $e->getMessage()
             ]);
         }
         

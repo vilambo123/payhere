@@ -181,9 +181,6 @@ if (strpos($uri, $config['index_page'].'/') === 0) {
     $uri = substr($uri, strlen($config['index_page']) + 1);
 }
 
-// Log for debugging
-error_log("Bootstrap routing - URI: $uri");
-
 // Match route
 $controller = $route['default_controller'];
 $method = 'index';
@@ -193,9 +190,7 @@ if (!empty($uri)) {
     // Try to match custom routes
     foreach ($route as $pattern => $target) {
         if ($pattern !== 'default_controller' && $pattern !== '404_override' && $pattern !== 'translate_uri_dashes') {
-            error_log("Checking route pattern: $pattern against URI: $uri");
             if ($uri === $pattern) {
-                error_log("Route matched! Target: $target");
                 list($controller, $method) = explode('/', $target);
                 $matched = true;
                 break;
@@ -208,11 +203,8 @@ if (!empty($uri)) {
         $segments = explode('/', $uri);
         $controller = ucfirst($segments[0]);
         $method = isset($segments[1]) ? $segments[1] : 'index';
-        error_log("Using default routing - Controller: $controller, Method: $method");
     }
 }
-
-error_log("Final - Controller: $controller, Method: $method");
 
 // Load and execute controller
 $controller = ucfirst($controller);

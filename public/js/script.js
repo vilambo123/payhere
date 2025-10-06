@@ -348,9 +348,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = window.location.origin + window.location.pathname.replace('index.php', '');
             const submitUrl = baseUrl + 'index.php/submit-inquiry';
             
-            console.log('Submitting to:', submitUrl); // Debug
-            console.log('Form data:', data); // Debug
-            
             // Send data to server
             fetch(submitUrl, {
                 method: 'POST',
@@ -360,15 +357,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(data)
             })
             .then(response => {
-                console.log('Response status:', response.status); // Debug
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.status);
                 }
                 return response.text(); // Get as text first
             })
             .then(text => {
-                console.log('Response text:', text); // Debug
-                console.log('Response length:', text.length); // Debug
                 
                 // Check if response is empty
                 if (!text || text.trim().length === 0) {
@@ -377,7 +371,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 try {
                     const result = JSON.parse(text);
-                    console.log('Parsed result:', result); // Debug
                     
                     if (result.success) {
                         formMessage.className = 'form-message success';
@@ -396,9 +389,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 } catch (e) {
-                    console.error('JSON parse error:', e);
-                    console.error('Response text:', text);
-                    
                     formMessage.className = 'form-message error';
                     
                     // More helpful error message
@@ -428,7 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 5000);
             })
             .catch(error => {
-                console.error('Fetch error:', error); // Debug
                 formMessage.className = 'form-message error';
                 
                 // More specific error messages
