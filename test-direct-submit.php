@@ -7,6 +7,11 @@
 // Define BASEPATH to prevent "No direct script access allowed" error
 define('BASEPATH', __DIR__ . '/');
 
+// Define ENVIRONMENT constant
+if (!defined('ENVIRONMENT')) {
+    define('ENVIRONMENT', 'development');
+}
+
 // Test data
 $testData = [
     'name' => 'Ahmad bin Abdullah',
