@@ -102,6 +102,10 @@ INSERT INTO `site_settings` (`setting_key`, `setting_value`, `setting_type`, `de
 ('site_email', 'info@quickloan.com', 'email', 'Contact email address'),
 ('site_phone', '+60 3-1234 5678', 'text', 'Contact phone number'),
 ('site_address', 'Kuala Lumpur, Malaysia', 'text', 'Business address'),
+('social_facebook', 'https://facebook.com/quickloan', 'url', 'Facebook page URL'),
+('social_twitter', 'https://twitter.com/quickloan', 'url', 'Twitter profile URL'),
+('social_instagram', 'https://instagram.com/quickloan', 'url', 'Instagram profile URL'),
+('social_linkedin', 'https://linkedin.com/company/quickloan', 'url', 'LinkedIn company URL'),
 ('enable_notifications', '1', 'boolean', 'Enable email notifications for new inquiries'),
 ('maintenance_mode', '0', 'boolean', 'Enable maintenance mode');
 

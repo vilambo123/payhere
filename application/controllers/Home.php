@@ -12,12 +12,27 @@ class Home extends CI_Controller {
      * Landing page
      */
     public function index() {
-        $data['page_title'] = 'Financial Loan Solutions | Quick & Easy Loan Approval';
+        // Load settings and loan types from database
+        $settings_model = new Settings_model();
+        $loan_type_model = new Loan_type_model();
+        
+        // Get all settings
+        $settings = $settings_model->get_categorized_settings();
+        $data['settings'] = $settings;
+        $data['site'] = $settings['site'];
+        $data['social'] = $settings['social'];
+        
+        // Get loan types
+        $data['loan_types'] = $loan_type_model->get_all_active();
+        $data['loan_stats'] = $loan_type_model->get_statistics();
+        
+        // Page meta
+        $data['page_title'] = $settings['site']['name'] . ' - Financial Loan Solutions | Quick & Easy Loan Approval';
         $data['meta_description'] = 'Get instant loan approval with competitive rates. Personal loans, business loans, and more. Apply online in minutes.';
         
         $this->load->view('layouts/header', $data);
         $this->load->view('home/index', $data);
-        $this->load->view('layouts/footer');
+        $this->load->view('layouts/footer', $data);
     }
 
     /**

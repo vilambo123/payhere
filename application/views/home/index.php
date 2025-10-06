@@ -58,62 +58,44 @@
             <p>Choose from our wide range of loan products tailored to your needs</p>
         </div>
         <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <h3>Personal Loan</h3>
-                <p>Quick cash for any personal need. Get up to RM 200,000 with flexible repayment terms.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Up to RM 200,000</li>
-                    <li><i class="fas fa-check"></i> Interest from 3.5% p.a.</li>
-                    <li><i class="fas fa-check"></i> Tenure up to 10 years</li>
-                </ul>
-                <a href="#apply" class="btn btn-outline">Apply Now</a>
-            </div>
-            
-            <div class="service-card featured">
+            <?php 
+            if (isset($loan_types) && !empty($loan_types)):
+                $icons = [
+                    'personal' => 'fa-user-tie',
+                    'business' => 'fa-briefcase',
+                    'home' => 'fa-home',
+                    'car' => 'fa-car'
+                ];
+                $index = 0;
+                foreach ($loan_types as $loan):
+                    $index++;
+                    $icon = isset($icons[$loan['type_name']]) ? $icons[$loan['type_name']] : 'fa-dollar-sign';
+                    $is_featured = ($loan['type_name'] == 'business'); // Make business featured
+            ?>
+            <div class="service-card <?php echo $is_featured ? 'featured' : ''; ?>">
+                <?php if ($is_featured): ?>
                 <div class="badge">Most Popular</div>
+                <?php endif; ?>
                 <div class="service-icon">
-                    <i class="fas fa-briefcase"></i>
+                    <i class="fas <?php echo $icon; ?>"></i>
                 </div>
-                <h3>Business Loan</h3>
-                <p>Grow your business with our competitive business financing solutions.</p>
+                <h3><?php echo htmlspecialchars($loan['display_name']); ?></h3>
+                <p><?php echo htmlspecialchars($loan['description']); ?></p>
                 <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Up to RM 1,000,000</li>
-                    <li><i class="fas fa-check"></i> Interest from 4.0% p.a.</li>
-                    <li><i class="fas fa-check"></i> Tenure up to 15 years</li>
+                    <li><i class="fas fa-check"></i> Up to RM <?php echo number_format($loan['max_amount'], 0); ?></li>
+                    <li><i class="fas fa-check"></i> Interest from <?php echo number_format($loan['min_interest_rate'], 1); ?>% p.a.</li>
+                    <li><i class="fas fa-check"></i> Tenure up to <?php echo $loan['max_tenure_years']; ?> years</li>
                 </ul>
-                <a href="#apply" class="btn btn-primary">Apply Now</a>
+                <a href="#apply" class="btn <?php echo $is_featured ? 'btn-primary' : 'btn-outline'; ?>">Apply Now</a>
             </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-home"></i>
-                </div>
-                <h3>Home Loan</h3>
-                <p>Make your dream home a reality with our affordable home financing options.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Up to RM 2,000,000</li>
-                    <li><i class="fas fa-check"></i> Interest from 3.2% p.a.</li>
-                    <li><i class="fas fa-check"></i> Tenure up to 35 years</li>
-                </ul>
-                <a href="#apply" class="btn btn-outline">Apply Now</a>
+            <?php 
+                endforeach;
+            else:
+            ?>
+            <div class="empty-state">
+                <p>No loan products available at the moment.</p>
             </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-car"></i>
-                </div>
-                <h3>Car Loan</h3>
-                <p>Drive your dream car today with our hassle-free auto financing.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Up to RM 500,000</li>
-                    <li><i class="fas fa-check"></i> Interest from 2.8% p.a.</li>
-                    <li><i class="fas fa-check"></i> Tenure up to 9 years</li>
-                </ul>
-                <a href="#apply" class="btn btn-outline">Apply Now</a>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -276,10 +258,17 @@
                         <label for="loan_type">Loan Type *</label>
                         <select id="loan_type" name="loan_type" required>
                             <option value="">Select Loan Type</option>
-                            <option value="personal">Personal Loan</option>
-                            <option value="business">Business Loan</option>
-                            <option value="home">Home Loan</option>
-                            <option value="car">Car Loan</option>
+                            <?php 
+                            if (isset($loan_types) && !empty($loan_types)):
+                                foreach ($loan_types as $loan):
+                            ?>
+                            <option value="<?php echo htmlspecialchars($loan['type_name']); ?>">
+                                <?php echo htmlspecialchars($loan['display_name']); ?>
+                            </option>
+                            <?php 
+                                endforeach;
+                            endif;
+                            ?>
                         </select>
                     </div>
                 </div>

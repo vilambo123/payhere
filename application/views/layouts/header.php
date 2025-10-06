@@ -16,7 +16,7 @@
             <div class="nav-wrapper">
                 <div class="logo">
                     <i class="fas fa-hand-holding-usd"></i>
-                    <span>QuickLoan</span>
+                    <span><?php echo isset($site['name']) ? htmlspecialchars($site['name']) : 'QuickLoan'; ?></span>
                 </div>
                 <div class="nav-menu" id="navMenu">
                     <a href="#home" class="nav-link">Home</a>
