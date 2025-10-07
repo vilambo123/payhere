@@ -1,9 +1,26 @@
+<!DOCTYPE html>
+<html lang="<?php echo isset($current_lang) ? $current_lang : 'en'; ?>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo isset($page_title) ? $page_title : 'Download App'; ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
 <!-- Download Page - Modern Play Store Style -->
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
     body {
         background: #f1f3f4 !important;
         margin: 0;
         padding: 0;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     
     .download-page {
@@ -210,15 +227,17 @@
     .download-button-container {
         padding: 24px 40px 32px 40px;
         border-bottom: 1px solid #dadce0;
+        text-align: center;
     }
     
     .download-btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 12px;
         background: #1a73e8;
         color: white;
-        padding: 12px 24px;
+        padding: 14px 32px;
         border-radius: 4px;
         font-size: 0.875rem;
         font-weight: 500;
@@ -227,6 +246,7 @@
         box-shadow: none;
         text-transform: none;
         letter-spacing: 0.25px;
+        min-width: 200px;
     }
     
     .download-btn:hover {
@@ -257,8 +277,10 @@
     
     .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        max-width: 700px;
+        margin: 0 auto;
     }
     
     .feature-item {
@@ -333,7 +355,7 @@
         background: #e8f0fe;
         border-left: 4px solid #1a73e8;
         padding: 16px 20px;
-        margin: 0 40px 32px 40px;
+        margin: 24px 40px 40px 40px;
         border-radius: 4px;
     }
     
@@ -529,3 +551,6 @@ document.getElementById('downloadBtn').addEventListener('click', function(e) {
     console.log('Download button clicked');
 });
 </script>
+
+</body>
+</html>
