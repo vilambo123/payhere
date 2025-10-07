@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'home';
 $route['submit-inquiry'] = 'home/submit_inquiry';
+$route['download'] = 'download/index';
 $route['admin'] = 'admin/index';
 $route['admin/update-status/(:num)'] = 'admin/update_status/$1';
 $route['admin/delete/(:num)'] = 'admin/delete/$1';

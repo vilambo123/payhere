@@ -392,8 +392,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         formMessage.style.display = 'block';
                         loanApplicationForm.reset();
                         
-                        // Scroll to success message
-                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // Redirect to download page after 2 seconds
+                        setTimeout(() => {
+                            const downloadUrl = baseUrl + 'index.php/download';
+                            window.location.href = downloadUrl;
+                        }, 2000);
+                        
+                        // Show redirecting message
+                        setTimeout(() => {
+                            formMessage.textContent = result.message + ' Redirecting to download page...';
+                        }, 1000);
                     } else {
                         formMessage.className = 'form-message error';
                         formMessage.textContent = result.message;
