@@ -1,9 +1,57 @@
 <!-- Download Page - Google Play Store Style -->
 <style>
+    body {
+        background: #f8f9fa !important;
+    }
+    
     .download-page {
         background: #f8f9fa;
-        min-height: calc(100vh - 140px);
-        padding: 60px 0;
+        min-height: 100vh;
+        padding: 0;
+    }
+    
+    .download-navbar {
+        background: white;
+        padding: 16px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 0;
+    }
+    
+    .download-nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .download-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #202124;
+    }
+    
+    .download-logo i {
+        color: #01875f;
+        font-size: 1.8rem;
+    }
+    
+    .download-breadcrumb {
+        color: #5f6368;
+        font-size: 0.9rem;
+    }
+    
+    .download-breadcrumb a {
+        color: #01875f;
+        text-decoration: none;
+    }
+    
+    .download-breadcrumb a:hover {
+        text-decoration: underline;
     }
     
     .download-container {
@@ -13,13 +61,27 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
     }
     
     .download-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 40px;
+        background: linear-gradient(135deg, #01875f 0%, #00a76f 100%);
+        padding: 60px 40px;
         text-align: center;
         color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .download-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+        opacity: 0.3;
     }
     
     .download-header h1 {
@@ -246,7 +308,20 @@
 </style>
 
 <div class="download-page">
-    <div class="container">
+    <!-- Google Play Store Style Navigation -->
+    <div class="download-navbar">
+        <div class="download-nav-content">
+            <div class="download-logo">
+                <i class="fab fa-google-play"></i>
+                <span><?php _e('site_name'); ?></span>
+            </div>
+            <div class="download-breadcrumb">
+                <a href="<?php echo base_url(); ?>">← <?php _e('nav_home'); ?></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" style="padding-top: 40px;">
         <div class="download-container">
             <!-- Header -->
             <div class="download-header">

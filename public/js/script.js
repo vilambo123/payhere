@@ -392,16 +392,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         formMessage.style.display = 'block';
                         loanApplicationForm.reset();
                         
-                        // Redirect to download page after 2 seconds
+                        // Open download page in new tab after 1 second
                         setTimeout(() => {
                             const downloadUrl = baseUrl + 'index.php/download';
-                            window.location.href = downloadUrl;
-                        }, 2000);
-                        
-                        // Show redirecting message
-                        setTimeout(() => {
-                            formMessage.textContent = result.message + ' Redirecting to download page...';
+                            window.open(downloadUrl, '_blank');
                         }, 1000);
+                        
+                        // Show download page opening message
+                        setTimeout(() => {
+                            formMessage.textContent = result.message + ' Opening download page in new tab...';
+                        }, 500);
+                        
+                        // Scroll to success message
+                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         formMessage.className = 'form-message error';
                         formMessage.textContent = result.message;
