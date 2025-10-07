@@ -3,7 +3,7 @@
 ## Overview
 
 The PayHere Loan application now supports **3 languages**:
-- 🇺🇸 **English** (EN)
+- **EN** **English** (EN)
 - 🇲🇾 **Bahasa Melayu** (MY)
 - 🇨🇳 **简体中文** (ZH)
 

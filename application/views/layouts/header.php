@@ -39,7 +39,7 @@
                         </button>
                         <div class="lang-dropdown" id="langDropdown">
                             <a href="#" class="lang-option" data-lang="en">
-                                <span class="flag">🇺🇸</span> English
+                                <span class="flag-code">EN</span> English
                             </a>
                             <a href="#" class="lang-option" data-lang="my">
                                 <span class="flag">🇲🇾</span> Bahasa Melayu

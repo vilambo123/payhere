@@ -21,7 +21,7 @@
    - Look for the **globe icon** 🌍 with current language (EN/MY/ZH)
 
 3. **Click to see options:**
-   - 🇺🇸 English
+   - EN English
    - 🇲🇾 Bahasa Melayu
    - 🇨🇳 简体中文
 
@@ -260,3 +260,5 @@ Multi-language support is **ready to use**!
 ---
 
 **Enjoy your multilingual loan application! 🌍✨**
+�**
+*

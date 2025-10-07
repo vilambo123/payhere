@@ -950,6 +950,15 @@ body {
     font-size: 1.25rem;
 }
 
+.lang-option .flag-code {
+    display: inline-block;
+    min-width: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
