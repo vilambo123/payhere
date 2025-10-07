@@ -1,200 +1,258 @@
-<!-- Download Page - Google Play Store Style -->
+<!-- Download Page - Modern Play Store Style -->
 <style>
     body {
-        background: #f8f9fa !important;
+        background: #f1f3f4 !important;
+        margin: 0;
+        padding: 0;
     }
     
     .download-page {
-        background: #f8f9fa;
+        background: #f1f3f4;
         min-height: 100vh;
         padding: 0;
     }
     
     .download-navbar {
-        background: white;
-        padding: 16px 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: #fff;
+        padding: 12px 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         margin-bottom: 0;
     }
     
     .download-nav-content {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 0 20px;
+        padding: 0 24px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        justify-content: space-between;
     }
     
     .download-logo {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #202124;
+        gap: 16px;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #5f6368;
     }
     
     .download-logo i {
-        color: #01875f;
-        font-size: 1.8rem;
+        color: #34a853;
+        font-size: 2rem;
     }
     
     .download-breadcrumb {
-        color: #5f6368;
-        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
     
     .download-breadcrumb a {
-        color: #01875f;
+        color: #1a73e8;
         text-decoration: none;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: background 0.2s;
     }
     
     .download-breadcrumb a:hover {
-        text-decoration: underline;
+        background: rgba(26, 115, 232, 0.08);
     }
     
     .download-container {
         max-width: 1000px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-bottom: 40px;
+        margin: 24px auto;
+        background: #fff;
+        border-radius: 8px;
+        overflow: visible;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     
-    .download-header {
-        background: linear-gradient(135deg, #01875f 0%, #00a76f 100%);
-        padding: 60px 40px;
-        text-align: center;
-        color: white;
+    .download-hero {
+        background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+        padding: 0;
         position: relative;
+        height: 280px;
         overflow: hidden;
     }
     
-    .download-header::before {
+    .download-hero::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
-        opacity: 0.3;
+        background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
     }
     
-    .download-header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 40px;
+        height: 100%;
     }
     
-    .download-header p {
-        font-size: 1.2rem;
-        opacity: 0.95;
+    .hero-text h1 {
+        font-size: 2.25rem;
+        font-weight: 400;
+        color: #fff;
+        margin: 0 0 12px 0;
+        letter-spacing: -0.5px;
+    }
+    
+    .hero-text p {
+        font-size: 1rem;
+        color: rgba(255,255,255,0.9);
+        margin: 0;
+        max-width: 500px;
+    }
+    
+    .hero-image {
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+    
+    .hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
     }
     
     .app-info {
-        display: grid;
-        grid-template-columns: 180px 1fr;
-        gap: 40px;
-        padding: 40px;
-        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        gap: 32px;
+        padding: 32px 40px;
+        border-bottom: 1px solid #dadce0;
+        align-items: flex-start;
     }
     
     .app-icon {
-        width: 180px;
-        height: 180px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 24px;
+        width: 140px;
+        height: 140px;
+        background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+        border-radius: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 5rem;
-        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        font-size: 4rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        flex-shrink: 0;
+    }
+    
+    .app-details {
+        flex: 1;
     }
     
     .app-details h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        font-weight: 400;
         color: #202124;
-        margin-bottom: 0.5rem;
+        margin: 0 0 8px 0;
     }
     
     .app-developer {
-        color: #01875f;
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        color: #34a853;
+        font-size: 0.875rem;
+        margin-bottom: 16px;
         font-weight: 500;
     }
     
     .app-stats {
         display: flex;
-        gap: 30px;
-        margin: 20px 0;
-        padding: 20px 0;
-        border-top: 1px solid #e0e0e0;
-        border-bottom: 1px solid #e0e0e0;
+        gap: 48px;
+        margin: 16px 0 0 0;
     }
     
     .stat-item {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
     }
     
     .stat-value {
-        font-size: 1.5rem;
-        font-weight: 600;
+        font-size: 0.875rem;
+        font-weight: 700;
         color: #202124;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 5px;
+        gap: 6px;
+        letter-spacing: 0.2px;
     }
     
     .stat-label {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: #5f6368;
-        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .rating-stars {
+        color: #fbbc04;
+        font-size: 0.875rem;
+        margin-left: 4px;
     }
     
     .download-button-container {
-        padding: 0 40px 40px 40px;
+        padding: 24px 40px 32px 40px;
+        border-bottom: 1px solid #dadce0;
     }
     
     .download-btn {
         display: inline-flex;
         align-items: center;
-        gap: 15px;
-        background: #01875f;
+        gap: 12px;
+        background: #1a73e8;
         color: white;
-        padding: 16px 32px;
-        border-radius: 8px;
-        font-size: 1.1rem;
-        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(1, 135, 95, 0.3);
+        transition: all 0.2s;
+        box-shadow: none;
+        text-transform: none;
+        letter-spacing: 0.25px;
     }
     
     .download-btn:hover {
-        background: #016d4f;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(1, 135, 95, 0.4);
+        background: #1765cc;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.15);
+    }
+    
+    .download-btn:active {
+        background: #1557b0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     
     .download-btn i {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
     
     .app-features {
-        padding: 40px;
-        background: #f8f9fa;
+        padding: 32px 40px;
+        background: #fff;
     }
     
     .app-features h3 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 500;
         color: #202124;
-        margin-bottom: 20px;
+        margin: 0 0 24px 0;
     }
     
     .features-grid {
@@ -210,38 +268,43 @@
     }
     
     .feature-icon {
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        background: #e8f0fe;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 1.5rem;
+        color: #1a73e8;
+        font-size: 1.25rem;
         flex-shrink: 0;
     }
     
     .feature-content h4 {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        font-weight: 500;
         color: #202124;
-        margin-bottom: 5px;
+        margin: 0 0 4px 0;
     }
     
     .feature-content p {
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         color: #5f6368;
-        line-height: 1.5;
+        line-height: 1.4;
+        margin: 0;
     }
     
     .app-screenshots {
-        padding: 40px;
+        padding: 32px 40px;
+        background: #fff;
+        border-top: 1px solid #dadce0;
     }
     
     .app-screenshots h3 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 500;
         color: #202124;
-        margin-bottom: 20px;
+        margin: 0 0 20px 0;
     }
     
     .screenshots-scroll {
@@ -252,38 +315,43 @@
     }
     
     .screenshot {
-        width: 200px;
-        height: 400px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 16px;
+        width: 180px;
+        height: 360px;
+        background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+        border-radius: 24px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 3rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-size: 2.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        border: 8px solid #202124;
     }
     
     .security-note {
-        background: #e8f5e9;
-        border-left: 4px solid #4caf50;
-        padding: 20px;
-        margin: 40px;
-        border-radius: 8px;
+        background: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 16px 20px;
+        margin: 0 40px 32px 40px;
+        border-radius: 4px;
     }
     
     .security-note h4 {
-        color: #2e7d32;
-        margin-bottom: 10px;
+        color: #1a73e8;
+        margin: 0 0 8px 0;
+        font-size: 0.875rem;
+        font-weight: 500;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
     
     .security-note p {
-        color: #1b5e20;
-        line-height: 1.6;
+        color: #3c4043;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin: 0;
     }
     
     @media (max-width: 768px) {
@@ -321,12 +389,19 @@
         </div>
     </div>
     
-    <div class="container" style="padding-top: 40px;">
+    <div class="container" style="padding-top: 24px;">
         <div class="download-container">
-            <!-- Header -->
-            <div class="download-header">
-                <h1><?php _e('download_page_title'); ?></h1>
-                <p><?php _e('download_page_subtitle'); ?></p>
+            <!-- Hero Banner -->
+            <div class="download-hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1><?php _e('download_page_title'); ?></h1>
+                        <p><?php _e('download_page_subtitle'); ?></p>
+                    </div>
+                    <div class="hero-image">
+                        <i class="fas fa-mobile-alt" style="font-size: 8rem; color: white;"></i>
+                    </div>
+                </div>
             </div>
             
             <!-- App Info -->
@@ -342,8 +417,8 @@
                     <div class="app-stats">
                         <div class="stat-item">
                             <div class="stat-value">
-                                <i class="fas fa-star" style="color: #fbbc04;"></i>
                                 4.8
+                                <span class="rating-stars">★★★★★</span>
                             </div>
                             <div class="stat-label"><?php _e('download_rating'); ?></div>
                         </div>
@@ -352,10 +427,7 @@
                             <div class="stat-label"><?php _e('download_downloads'); ?></div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value">
-                                <i class="fas fa-mobile-alt" style="color: #01875f;"></i>
-                                18+
-                            </div>
+                            <div class="stat-value">18+</div>
                             <div class="stat-label"><?php _e('download_age'); ?></div>
                         </div>
                     </div>
