@@ -20,13 +20,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if href is just "#" or empty
+            if (!href || href === '#' || href.length <= 1) {
+                e.preventDefault(); // Prevent default but don't scroll
+                return;
+            }
+            
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            
+            try {
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            } catch (err) {
+                // Invalid selector, ignore
+                console.warn('Invalid selector:', href);
             }
         });
     });
@@ -348,9 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = window.location.origin + window.location.pathname.replace('index.php', '');
             const submitUrl = baseUrl + 'index.php/submit-inquiry';
             
-            console.log('Submitting to:', submitUrl); // Debug
-            console.log('Form data:', data); // Debug
-            
             // Send data to server
             fetch(submitUrl, {
                 method: 'POST',
@@ -360,15 +371,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: new URLSearchParams(data)
             })
             .then(response => {
-                console.log('Response status:', response.status); // Debug
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.status);
                 }
                 return response.text(); // Get as text first
             })
             .then(text => {
-                console.log('Response text:', text); // Debug
-                console.log('Response length:', text.length); // Debug
                 
                 // Check if response is empty
                 if (!text || text.trim().length === 0) {
@@ -377,7 +385,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 try {
                     const result = JSON.parse(text);
-                    console.log('Parsed result:', result); // Debug
                     
                     if (result.success) {
                         formMessage.className = 'form-message success';
@@ -396,9 +403,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 } catch (e) {
-                    console.error('JSON parse error:', e);
-                    console.error('Response text:', text);
-                    
                     formMessage.className = 'form-message error';
                     
                     // More helpful error message
@@ -428,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 5000);
             })
             .catch(error => {
-                console.error('Fetch error:', error); // Debug
                 formMessage.className = 'form-message error';
                 
                 // More specific error messages
@@ -484,4 +487,96 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('section').forEach(section => {
         observer.observe(section);
     });
+    
+    // =====================================================
+    // Language Switcher
+    // =====================================================
+    
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const langOptions = document.querySelectorAll('.lang-option');
+    
+    // Toggle language dropdown
+    if (langBtn && langDropdown) {
+        langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+            langBtn.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('active');
+                langBtn.classList.remove('active');
+            }
+        });
+    }
+    
+    // Handle language selection
+    langOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedLang = this.getAttribute('data-lang');
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            // Switch language
+            switchLanguage(selectedLang);
+        });
+    });
+    
+    /**
+     * Switch language function
+     */
+    function switchLanguage(lang) {
+        // Calculate base URL
+        const baseUrl = window.location.protocol + '//' + window.location.host + 
+                       window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/';
+        
+        fetch(baseUrl + 'index.php/language/switch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'lang=' + lang
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload page to apply new language
+                window.location.reload();
+            } else {
+                console.error('Language switch failed:', data.message);
+                alert('Failed to switch language. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error switching language:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+    
+    /**
+     * Get translation from window.translations
+     */
+    function lang(key, params = {}) {
+        if (typeof window.translations === 'undefined') {
+            return key;
+        }
+        
+        let text = window.translations[key] || key;
+        
+        // Replace parameters
+        for (let param in params) {
+            text = text.replace('{' + param + '}', params[param]);
+        }
+        
+        return text;
+    }
+    
+    // Make lang function globally available
+    window.lang = lang;
 });

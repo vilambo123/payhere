@@ -9,12 +9,18 @@ class Home extends CI_Controller {
         
         // Load Malaysian validation helper
         require_once APPPATH . 'helpers/malaysian_validation_helper.php';
+        
+        // Load language helper
+        require_once APPPATH . 'helpers/language_helper.php';
     }
 
     /**
      * Landing page
      */
     public function index() {
+        // Get current language
+        $current_lang = get_current_language();
+        
         // Load settings and loan types from database
         $settings_model = new Settings_model();
         $loan_type_model = new Loan_type_model();
@@ -33,6 +39,10 @@ class Home extends CI_Controller {
         $data['page_title'] = $settings['site']['name'] . ' - Financial Loan Solutions | Quick & Easy Loan Approval';
         $data['meta_description'] = 'Get instant loan approval with competitive rates. Personal loans, business loans, and more. Apply online in minutes.';
         
+        // Language support
+        $data['current_lang'] = $current_lang;
+        $data['translations_json'] = get_language_json();
+        
         $this->load->view('layouts/header', $data);
         $this->load->view('home/index', $data);
         $this->load->view('layouts/footer', $data);
@@ -45,11 +55,7 @@ class Home extends CI_Controller {
         // Set JSON header
         header('Content-Type: application/json');
         
-        // Add error logging
-        error_log('=== Submit inquiry START ===');
-        error_log('POST data: ' . print_r($_POST, true));
-        
-        // Test if POST data exists
+        // Check if POST data exists
         if (empty($_POST)) {
             echo json_encode([
                 'success' => false,
@@ -65,6 +71,7 @@ class Home extends CI_Controller {
             $this->form_validation->set_rules('name', 'Name', 'required|trim|min_length[3]|max_length[100]');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
             $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
+            $this->form_validation->set_rules('ic_number', 'IC Number', 'required|trim');
             $this->form_validation->set_rules('loan_amount', 'Loan Amount', 'required|numeric|greater_than[999]');
             $this->form_validation->set_rules('loan_type', 'Loan Type', 'required');
 
@@ -84,6 +91,16 @@ class Home extends CI_Controller {
                 echo json_encode([
                     'success' => false,
                     'message' => 'Please provide a valid Malaysian phone number (e.g., 012-345-6789 or +6012-345-6789)'
+                ]);
+                return;
+            }
+            
+            // Validate IC number
+            $ic_number = $this->input->post('ic_number');
+            if (!validate_malaysian_ic($ic_number)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Please provide a valid Malaysian IC number (e.g., 901231-01-5678)'
                 ]);
                 return;
             }
@@ -111,11 +128,28 @@ class Home extends CI_Controller {
                 return;
             }
             
-            // Prepare data for database (with formatted phone)
+            // Check for existing pending application
+            $email = $this->input->post('email');
+            $inquiry_model = new Inquiry_model();
+            $pending = $inquiry_model->check_pending_application($email, $ic_number);
+            
+            if ($pending) {
+                $submission_date = date('d M Y', strtotime($pending['created_at']));
+                echo json_encode([
+                    'success' => false,
+                    'message' => "We have received your application submitted on {$submission_date}. Our team is currently reviewing your request and will contact you within 2-3 business days. We appreciate your patience. If you have any urgent queries, please call us at " . (isset($GLOBALS['site_phone']) ? $GLOBALS['site_phone'] : '+60 3-1234 5678') . ".",
+                    'pending_application_id' => $pending['id'],
+                    'submission_date' => $submission_date
+                ]);
+                return;
+            }
+            
+            // Prepare data for database (with formatted phone and IC)
             $data = [
                 'name' => ucwords(strtolower($this->input->post('name'))), // Proper case
                 'email' => strtolower($this->input->post('email')), // Lowercase email
                 'phone' => format_malaysian_phone($this->input->post('phone')), // Format phone
+                'ic_number' => format_malaysian_ic($ic_number), // Format IC
                 'loan_amount' => $this->input->post('loan_amount'),
                 'loan_type' => $this->input->post('loan_type'),
                 'monthly_income' => $this->input->post('income') ? $this->input->post('income') : null,
@@ -123,18 +157,13 @@ class Home extends CI_Controller {
                 'status' => 'pending'
             ];
 
-            error_log('Data to save: ' . print_r($data, true));
-
             // Check if database helper is loaded
             if (!class_exists('Database')) {
                 throw new Exception('Database helper not loaded');
             }
 
             // Save to database
-            $inquiry_model = new Inquiry_model();
             $insert_id = $inquiry_model->save($data);
-            
-            error_log('Insert ID: ' . $insert_id);
             
             if ($insert_id) {
                 echo json_encode([
@@ -149,17 +178,12 @@ class Home extends CI_Controller {
                 ]);
             }
         } catch (Exception $e) {
-            error_log('Exception in submit_inquiry: ' . $e->getMessage());
-            error_log('Stack trace: ' . $e->getTraceAsString());
+            // Log error for debugging
+            error_log('Submit inquiry error: ' . $e->getMessage());
             
             echo json_encode([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage(),
-                'debug' => [
-                    'file' => basename($e->getFile()),
-                    'line' => $e->getLine(),
-                    'trace' => $e->getTraceAsString()
-                ]
+                'message' => 'Error: ' . $e->getMessage()
             ]);
         }
         

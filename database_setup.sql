@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `inquiries` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(20) NOT NULL,
+  `ic_number` varchar(14) DEFAULT NULL,
   `loan_type` varchar(50) NOT NULL,
   `loan_amount` decimal(15,2) NOT NULL,
   `monthly_income` decimal(15,2) DEFAULT NULL,
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `inquiries` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_email` (`email`),
+  KEY `idx_ic_number` (`ic_number`),
   KEY `idx_status` (`status`),
   KEY `idx_created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

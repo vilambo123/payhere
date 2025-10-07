@@ -9,6 +9,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH.'config/config.php';
 require_once APPPATH.'config/routes.php';
 require_once APPPATH.'config/database_helper.php';
+require_once APPPATH.'helpers/language_helper.php';
+
+// Start session for language support
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Simple autoloader for controllers and models
 spl_autoload_register(function ($class) {
@@ -175,23 +181,31 @@ $script_name = $_SERVER['SCRIPT_NAME'];
 $base_path = str_replace(basename($script_name), '', $script_name);
 $uri = str_replace($base_path, '', $request_uri);
 $uri = trim(parse_url($uri, PHP_URL_PATH), '/');
-$uri = str_replace($config['index_page'].'/', '', $uri);
+
+// Remove index.php/ if present
+if (strpos($uri, $config['index_page'].'/') === 0) {
+    $uri = substr($uri, strlen($config['index_page']) + 1);
+}
 
 // Match route
 $controller = $route['default_controller'];
 $method = 'index';
+$matched = false;
 
 if (!empty($uri)) {
+    // Try to match custom routes
     foreach ($route as $pattern => $target) {
         if ($pattern !== 'default_controller' && $pattern !== '404_override' && $pattern !== 'translate_uri_dashes') {
             if ($uri === $pattern) {
                 list($controller, $method) = explode('/', $target);
+                $matched = true;
                 break;
             }
         }
     }
     
-    if ($controller === $route['default_controller'] && !empty($uri)) {
+    // If no custom route matched, try default controller/method
+    if (!$matched && $controller === $route['default_controller'] && !empty($uri)) {
         $segments = explode('/', $uri);
         $controller = ucfirst($segments[0]);
         $method = isset($segments[1]) ? $segments[1] : 'index';
@@ -200,10 +214,25 @@ if (!empty($uri)) {
 
 // Load and execute controller
 $controller = ucfirst($controller);
+
+// Force load the controller file if it exists
+$controller_file = APPPATH.'controllers/'.$controller.'.php';
+if (file_exists($controller_file)) {
+    require_once $controller_file;
+}
+
 if (class_exists($controller)) {
     $instance = new $controller();
     
     if (method_exists($instance, $method)) {
         $instance->$method();
+    } else {
+        // Method not found
+        header('HTTP/1.1 404 Not Found');
+        echo json_encode(['success' => false, 'message' => 'Method not found: ' . $method]);
     }
+} else {
+    // Controller not found
+    header('HTTP/1.1 404 Not Found');
+    echo json_encode(['success' => false, 'message' => 'Controller not found: ' . $controller]);
 }

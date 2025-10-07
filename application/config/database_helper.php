@@ -61,6 +61,9 @@ class Database {
      * Escape string
      */
     public function escape($value) {
+        if ($value === null) {
+            return null;
+        }
         return $this->connection->real_escape_string($value);
     }
     
@@ -86,7 +89,11 @@ class Database {
         
         // Escape values
         foreach ($values as $key => $value) {
-            $values[$key] = "'" . $this->escape($value) . "'";
+            if ($value === null) {
+                $values[$key] = "NULL";
+            } else {
+                $values[$key] = "'" . $this->escape($value) . "'";
+            }
         }
         
         $sql = "INSERT INTO `{$table}` (`" . implode('`, `', $fields) . "`) 
@@ -105,7 +112,11 @@ class Database {
     public function update($table, $data, $where) {
         $set = [];
         foreach ($data as $field => $value) {
-            $set[] = "`{$field}` = '" . $this->escape($value) . "'";
+            if ($value === null) {
+                $set[] = "`{$field}` = NULL";
+            } else {
+                $set[] = "`{$field}` = '" . $this->escape($value) . "'";
+            }
         }
         
         $where_clause = $this->build_where($where);

@@ -43,8 +43,10 @@ body {
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     z-index: 1000;
     transition: all 0.3s ease;
+    min-height: 70px;
 }
 
 .nav-wrapper {
@@ -52,6 +54,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
+    min-height: 70px;
+    gap: 2rem;
 }
 
 .logo {
@@ -61,16 +65,20 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
+    white-space: nowrap;
+    min-width: 150px;
 }
 
 .logo i {
     font-size: 2rem;
+    flex-shrink: 0;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
 }
 
 .nav-link {
@@ -78,6 +86,10 @@ body {
     color: var(--text-color);
     font-weight: 500;
     transition: color 0.3s ease;
+    white-space: nowrap;
+    text-align: center;
+    min-width: 120px; /* Based on longest text: "Perkhidmatan" */
+    display: inline-block;
 }
 
 .nav-link:hover {
@@ -100,7 +112,9 @@ body {
 
 /* Buttons */
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 12px 28px;
     text-decoration: none;
     border-radius: 8px;
@@ -110,12 +124,16 @@ body {
     cursor: pointer;
     font-size: 1rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 .btn-primary {
     background: var(--gradient-2);
     color: white;
     box-shadow: var(--shadow-md);
+    min-width: 140px; /* Based on "Mohon Sekarang" */
+    text-align: center;
+    justify-content: center;
 }
 
 .btn-primary:hover {
@@ -124,14 +142,15 @@ body {
 }
 
 .btn-secondary {
-    background: transparent;
+    background: white;
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 2px solid white;
 }
 
 .btn-secondary:hover {
     background: var(--primary-color);
     color: white;
+    border-color: var(--primary-color);
 }
 
 .btn-outline {
@@ -859,6 +878,108 @@ body {
     text-decoration: none;
 }
 
+/* Language Selector */
+.language-selector {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    min-width: 85px;
+    justify-content: center;
+}
+
+.lang-btn:hover {
+    background: var(--light-color);
+    border-color: var(--primary-color);
+}
+
+.lang-btn i.fa-globe {
+    color: var(--primary-color);
+}
+
+.lang-btn i.fa-chevron-down {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.lang-btn.active i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.lang-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.lang-option:last-child {
+    border-bottom: none;
+}
+
+.lang-option:hover {
+    background: var(--light-color);
+    color: var(--primary-color);
+}
+
+.lang-option.active {
+    background: var(--light-color);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.lang-option .flag {
+    font-size: 1.25rem;
+}
+
+.lang-option .flag-code {
+    display: inline-block;
+    min-width: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
@@ -930,4 +1051,6 @@ html {
 
 .fade-in-up {
     animation: fadeInUp 0.6s ease-out;
+}
+tion: fadeInUp 0.6s ease-out;
 }

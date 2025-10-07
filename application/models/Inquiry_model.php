@@ -132,4 +132,41 @@ class Inquiry_model {
         
         return $stats;
     }
+    
+    /**
+     * Check if user has pending application
+     * 
+     * @param string $email Email address
+     * @param string $ic_number IC number (optional)
+     * @return array|null Pending application or null
+     */
+    public function check_pending_application($email, $ic_number = null) {
+        $sql = "SELECT * FROM `{$this->table}` 
+                WHERE `status` = 'pending' 
+                AND (`email` = '" . $this->db->escape($email) . "'";
+        
+        if (!empty($ic_number)) {
+            $sql .= " OR `ic_number` = '" . $this->db->escape($ic_number) . "'";
+        }
+        
+        $sql .= ") ORDER BY `created_at` DESC LIMIT 1";
+        
+        $result = $this->db->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get application by IC number
+     * 
+     * @param string $ic_number IC number
+     * @return array List of applications
+     */
+    public function get_by_ic($ic_number) {
+        return $this->db->get_all($this->table, ['ic_number' => $ic_number], null, 0, 'created_at DESC');
+    }
 }
