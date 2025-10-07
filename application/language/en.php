@@ -5,8 +5,10 @@
 
 return [
     // Site Info
-    'site_name' => 'PayHere Loan Services',
+    'site_name' => 'QuickLoan',
+    'site_name_full' => 'QuickLoan Financial Services',
     'site_tagline' => 'Your Trusted Financial Partner',
+    'site_description' => 'We are a leading financial services provider in Malaysia, committed to helping you achieve your financial goals with our comprehensive loan solutions.',
     
     // Navigation
     'nav_home' => 'Home',

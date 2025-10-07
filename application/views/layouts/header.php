@@ -22,7 +22,7 @@
             <div class="nav-wrapper">
                 <div class="logo">
                     <i class="fas fa-hand-holding-usd"></i>
-                    <span><?php echo isset($site['name']) ? htmlspecialchars($site['name']) : 'QuickLoan'; ?></span>
+                    <span><?php _e('site_name'); ?></span>
                 </div>
                 <div class="nav-menu" id="navMenu">
                     <a href="#home" class="nav-link" data-lang="nav_home"><?php _e('nav_home'); ?></a>

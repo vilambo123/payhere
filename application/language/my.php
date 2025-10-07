@@ -5,8 +5,10 @@
 
 return [
     // Site Info
-    'site_name' => 'Perkhidmatan Pinjaman PayHere',
+    'site_name' => 'QuickLoan',
+    'site_name_full' => 'Perkhidmatan Kewangan QuickLoan',
     'site_tagline' => 'Rakan Kewangan Anda Yang Dipercayai',
+    'site_description' => 'Kami adalah penyedia perkhidmatan kewangan terkemuka di Malaysia, komited untuk membantu anda mencapai matlamat kewangan anda dengan penyelesaian pinjaman yang komprehensif.',
     
     // Navigation
     'nav_home' => 'Laman Utama',

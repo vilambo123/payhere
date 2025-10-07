@@ -5,8 +5,10 @@
 
 return [
     // Site Info
-    'site_name' => 'PayHere 贷款服务',
+    'site_name' => 'QuickLoan',
+    'site_name_full' => 'QuickLoan 金融服务',
     'site_tagline' => '您值得信赖的财务伙伴',
+    'site_description' => '我们是马来西亚领先的金融服务提供商，致力于通过我们全面的贷款解决方案帮助您实现财务目标。',
     
     // Navigation
     'nav_home' => '主页',

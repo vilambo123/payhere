@@ -45,7 +45,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; <?php echo date('Y'); ?> <?php echo isset($site['name']) ? htmlspecialchars($site['name']) : 'QuickLoan'; ?>. <?php _e('footer_rights'); ?></p>
+                <p>&copy; <?php echo date('Y'); ?> <?php _e('site_name'); ?>. <?php _e('footer_rights'); ?></p>
             </div>
         </div>
     </footer>
