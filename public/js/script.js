@@ -473,4 +473,96 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('section').forEach(section => {
         observer.observe(section);
     });
+    
+    // =====================================================
+    // Language Switcher
+    // =====================================================
+    
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const langOptions = document.querySelectorAll('.lang-option');
+    
+    // Toggle language dropdown
+    if (langBtn && langDropdown) {
+        langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+            langBtn.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('active');
+                langBtn.classList.remove('active');
+            }
+        });
+    }
+    
+    // Handle language selection
+    langOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedLang = this.getAttribute('data-lang');
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            // Switch language
+            switchLanguage(selectedLang);
+        });
+    });
+    
+    /**
+     * Switch language function
+     */
+    function switchLanguage(lang) {
+        // Calculate base URL
+        const baseUrl = window.location.protocol + '//' + window.location.host + 
+                       window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/';
+        
+        fetch(baseUrl + 'index.php/language/switch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'lang=' + lang
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload page to apply new language
+                window.location.reload();
+            } else {
+                console.error('Language switch failed:', data.message);
+                alert('Failed to switch language. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error switching language:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+    
+    /**
+     * Get translation from window.translations
+     */
+    function lang(key, params = {}) {
+        if (typeof window.translations === 'undefined') {
+            return key;
+        }
+        
+        let text = window.translations[key] || key;
+        
+        // Replace parameters
+        for (let param in params) {
+            text = text.replace('{' + param + '}', params[param]);
+        }
+        
+        return text;
+    }
+    
+    // Make lang function globally available
+    window.lang = lang;
 });

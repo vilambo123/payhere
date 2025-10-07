@@ -9,6 +9,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once APPPATH.'config/config.php';
 require_once APPPATH.'config/routes.php';
 require_once APPPATH.'config/database_helper.php';
+require_once APPPATH.'helpers/language_helper.php';
+
+// Start session for language support
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Simple autoloader for controllers and models
 spl_autoload_register(function ($class) {

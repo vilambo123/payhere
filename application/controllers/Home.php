@@ -9,12 +9,18 @@ class Home extends CI_Controller {
         
         // Load Malaysian validation helper
         require_once APPPATH . 'helpers/malaysian_validation_helper.php';
+        
+        // Load language helper
+        require_once APPPATH . 'helpers/language_helper.php';
     }
 
     /**
      * Landing page
      */
     public function index() {
+        // Get current language
+        $current_lang = get_current_language();
+        
         // Load settings and loan types from database
         $settings_model = new Settings_model();
         $loan_type_model = new Loan_type_model();
@@ -32,6 +38,10 @@ class Home extends CI_Controller {
         // Page meta
         $data['page_title'] = $settings['site']['name'] . ' - Financial Loan Solutions | Quick & Easy Loan Approval';
         $data['meta_description'] = 'Get instant loan approval with competitive rates. Personal loans, business loans, and more. Apply online in minutes.';
+        
+        // Language support
+        $data['current_lang'] = $current_lang;
+        $data['translations_json'] = get_language_json();
         
         $this->load->view('layouts/header', $data);
         $this->load->view('home/index', $data);
