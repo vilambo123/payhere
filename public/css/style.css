@@ -55,6 +55,7 @@ body {
     align-items: center;
     padding: 1rem 0;
     min-height: 70px;
+    gap: 2rem;
 }
 
 .logo {
@@ -76,7 +77,7 @@ body {
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: nowrap;
 }
 
@@ -86,6 +87,9 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     white-space: nowrap;
+    text-align: center;
+    min-width: 120px; /* Based on longest text: "Perkhidmatan" */
+    display: inline-block;
 }
 
 .nav-link:hover {
@@ -108,7 +112,9 @@ body {
 
 /* Buttons */
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 12px 28px;
     text-decoration: none;
     border-radius: 8px;
@@ -118,12 +124,16 @@ body {
     cursor: pointer;
     font-size: 1rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 .btn-primary {
     background: var(--gradient-2);
     color: white;
     box-shadow: var(--shadow-md);
+    min-width: 140px; /* Based on "Mohon Sekarang" */
+    text-align: center;
+    justify-content: center;
 }
 
 .btn-primary:hover {
@@ -887,6 +897,8 @@ body {
     font-weight: 500;
     color: var(--text-color);
     transition: all 0.3s ease;
+    min-width: 85px;
+    justify-content: center;
 }
 
 .lang-btn:hover {
