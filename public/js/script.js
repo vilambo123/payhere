@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Skip if href is just "#" or empty
             if (!href || href === '#' || href.length <= 1) {
+                e.preventDefault(); // Prevent default but don't scroll
                 return;
             }
             
