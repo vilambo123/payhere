@@ -108,4 +108,43 @@ return [
     'loan_business' => 'Business Loan',
     'loan_home' => 'Home Loan',
     'loan_car' => 'Car Loan',
+    
+    // Hero Stats
+    'stat_customers' => 'Happy Customers',
+    'stat_disbursed' => 'Loans Disbursed',
+    'stat_rating' => 'Customer Rating',
+    
+    // How It Works
+    'how_works_title' => 'How It Works',
+    'how_works_subtitle' => 'Get your loan in 3 simple steps',
+    'step1_title' => 'Submit Application',
+    'step1_desc' => 'Fill out our simple online form with your basic information and loan requirements.',
+    'step2_title' => 'Get Approved',
+    'step2_desc' => 'Our team reviews your application and provides instant approval within 24 hours.',
+    'step3_title' => 'Receive Funds',
+    'step3_desc' => 'Once approved, funds are transferred directly to your bank account.',
+    
+    // Testimonials
+    'testimonials_title' => 'What Our Customers Say',
+    'testimonials_subtitle' => 'Real stories from real people',
+    'testimonial1_text' => 'Quick and hassle-free! I got my personal loan approved within 24 hours. Highly recommended for anyone looking for fast financing.',
+    'testimonial1_name' => 'Ahmad Ibrahim',
+    'testimonial1_role' => 'Business Owner',
+    'testimonial2_text' => 'The customer service was excellent and the interest rates were very competitive. I managed to get my dream home thanks to QuickLoan!',
+    'testimonial2_name' => 'Siti Nurhaliza',
+    'testimonial2_role' => 'Teacher',
+    'testimonial3_text' => 'Very professional and transparent process. No hidden fees, everything was explained clearly. Got my car loan without any issues.',
+    'testimonial3_name' => 'Raj Kumar',
+    'testimonial3_role' => 'Engineer',
+    
+    // CTA Section
+    'cta_title' => 'Ready to Get Started?',
+    'cta_subtitle' => 'Join thousands of satisfied customers and get your loan approved today!',
+    'cta_button' => 'Apply Now',
+    
+    // Additional Benefits
+    'benefit_support_title' => '24/7 Support',
+    'benefit_support_desc' => 'Our customer service team is always here to help',
+    'benefit_online_title' => 'Easy Online Process',
+    'benefit_online_desc' => 'Apply anytime, anywhere from your device',
 ];

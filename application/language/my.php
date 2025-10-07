@@ -108,4 +108,43 @@ return [
     'loan_business' => 'Pinjaman Perniagaan',
     'loan_home' => 'Pinjaman Rumah',
     'loan_car' => 'Pinjaman Kereta',
+    
+    // Hero Stats
+    'stat_customers' => 'Pelanggan Gembira',
+    'stat_disbursed' => 'Pinjaman Dikeluarkan',
+    'stat_rating' => 'Penilaian Pelanggan',
+    
+    // How It Works
+    'how_works_title' => 'Bagaimana Ia Berfungsi',
+    'how_works_subtitle' => 'Dapatkan pinjaman anda dalam 3 langkah mudah',
+    'step1_title' => 'Hantar Permohonan',
+    'step1_desc' => 'Isi borang dalam talian kami dengan maklumat asas dan keperluan pinjaman anda.',
+    'step2_title' => 'Dapatkan Kelulusan',
+    'step2_desc' => 'Pasukan kami akan menyemak permohonan anda dan memberikan kelulusan segera dalam masa 24 jam.',
+    'step3_title' => 'Terima Dana',
+    'step3_desc' => 'Setelah diluluskan, dana akan dipindahkan terus ke akaun bank anda.',
+    
+    // Testimonials
+    'testimonials_title' => 'Kata Pelanggan Kami',
+    'testimonials_subtitle' => 'Cerita sebenar daripada orang sebenar',
+    'testimonial1_text' => 'Cepat dan mudah! Pinjaman peribadi saya diluluskan dalam masa 24 jam. Sangat disyorkan untuk sesiapa yang mencari pembiayaan pantas.',
+    'testimonial1_name' => 'Ahmad Ibrahim',
+    'testimonial1_role' => 'Pemilik Perniagaan',
+    'testimonial2_text' => 'Perkhidmatan pelanggan sangat baik dan kadar faedah sangat kompetitif. Saya berjaya mendapatkan rumah impian saya terima kasih kepada QuickLoan!',
+    'testimonial2_name' => 'Siti Nurhaliza',
+    'testimonial2_role' => 'Guru',
+    'testimonial3_text' => 'Proses yang sangat profesional dan telus. Tiada bayaran tersembunyi, semuanya dijelaskan dengan jelas. Mendapat pinjaman kereta tanpa sebarang masalah.',
+    'testimonial3_name' => 'Raj Kumar',
+    'testimonial3_role' => 'Jurutera',
+    
+    // CTA Section
+    'cta_title' => 'Bersedia Untuk Bermula?',
+    'cta_subtitle' => 'Sertai beribu-ribu pelanggan yang berpuas hati dan dapatkan kelulusan pinjaman anda hari ini!',
+    'cta_button' => 'Mohon Sekarang',
+    
+    // Additional Benefits
+    'benefit_support_title' => 'Sokongan 24/7',
+    'benefit_support_desc' => 'Pasukan khidmat pelanggan kami sentiasa bersedia membantu',
+    'benefit_online_title' => 'Proses Dalam Talian Mudah',
+    'benefit_online_desc' => 'Mohon bila-bila masa, di mana sahaja dari peranti anda',
 ];

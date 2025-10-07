@@ -108,4 +108,43 @@ return [
     'loan_business' => '商业贷款',
     'loan_home' => '房屋贷款',
     'loan_car' => '汽车贷款',
+    
+    // Hero Stats
+    'stat_customers' => '满意客户',
+    'stat_disbursed' => '已发放贷款',
+    'stat_rating' => '客户评分',
+    
+    // How It Works
+    'how_works_title' => '如何运作',
+    'how_works_subtitle' => '3个简单步骤获得贷款',
+    'step1_title' => '提交申请',
+    'step1_desc' => '填写我们简单的在线表格，提供您的基本信息和贷款要求。',
+    'step2_title' => '获得批准',
+    'step2_desc' => '我们的团队将审核您的申请，并在24小时内提供即时批准。',
+    'step3_title' => '接收资金',
+    'step3_desc' => '一旦获得批准，资金将直接转入您的银行账户。',
+    
+    // Testimonials
+    'testimonials_title' => '客户评价',
+    'testimonials_subtitle' => '来自真实客户的真实故事',
+    'testimonial1_text' => '快速且无忧！我的个人贷款在24小时内获得批准。强烈推荐给任何寻求快速融资的人。',
+    'testimonial1_name' => 'Ahmad Ibrahim',
+    'testimonial1_role' => '企业主',
+    'testimonial2_text' => '客户服务非常出色，利率非常有竞争力。感谢QuickLoan，我成功获得了我的梦想家园！',
+    'testimonial2_name' => 'Siti Nurhaliza',
+    'testimonial2_role' => '教师',
+    'testimonial3_text' => '非常专业和透明的流程。没有隐藏费用，一切都解释得很清楚。顺利获得了汽车贷款。',
+    'testimonial3_name' => 'Raj Kumar',
+    'testimonial3_role' => '工程师',
+    
+    // CTA Section
+    'cta_title' => '准备开始了吗？',
+    'cta_subtitle' => '加入数千名满意的客户，立即获得贷款批准！',
+    'cta_button' => '立即申请',
+    
+    // Additional Benefits
+    'benefit_support_title' => '24/7 支持',
+    'benefit_support_desc' => '我们的客户服务团队随时为您提供帮助',
+    'benefit_online_title' => '简便的在线流程',
+    'benefit_online_desc' => '随时随地从您的设备申请',
 ];

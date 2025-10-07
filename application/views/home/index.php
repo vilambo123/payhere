@@ -26,15 +26,15 @@
                 <div class="hero-stats">
                     <div class="stat">
                         <h3>50,000+</h3>
-                        <p>Happy Customers</p>
+                        <p><?php _e('stat_customers'); ?></p>
                     </div>
                     <div class="stat">
                         <h3>RM 500M+</h3>
-                        <p>Loans Disbursed</p>
+                        <p><?php _e('stat_disbursed'); ?></p>
                     </div>
                     <div class="stat">
                         <h3>4.9/5</h3>
-                        <p>Customer Rating</p>
+                        <p><?php _e('stat_rating'); ?></p>
                     </div>
                 </div>
             </div>
@@ -104,8 +104,8 @@
 <section class="how-it-works" id="how-it-works">
     <div class="container">
         <div class="section-header">
-            <h2>How It Works</h2>
-            <p>Get your loan in 3 simple steps</p>
+            <h2><?php _e('how_works_title'); ?></h2>
+            <p><?php _e('how_works_subtitle'); ?></p>
         </div>
         <div class="steps-grid">
             <div class="step-card">
@@ -113,8 +113,8 @@
                 <div class="step-icon">
                     <i class="fas fa-file-alt"></i>
                 </div>
-                <h3>Submit Application</h3>
-                <p>Fill out our simple online form with your basic information and loan requirements.</p>
+                <h3><?php _e('step1_title'); ?></h3>
+                <p><?php _e('step1_desc'); ?></p>
             </div>
             
             <div class="step-arrow">
@@ -126,8 +126,8 @@
                 <div class="step-icon">
                     <i class="fas fa-search-dollar"></i>
                 </div>
-                <h3>Get Approved</h3>
-                <p>Our team reviews your application and provides instant approval within 24 hours.</p>
+                <h3><?php _e('step2_title'); ?></h3>
+                <p><?php _e('step2_desc'); ?></p>
             </div>
             
             <div class="step-arrow">
@@ -139,8 +139,8 @@
                 <div class="step-icon">
                     <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <h3>Receive Funds</h3>
-                <p>Once approved, funds are transferred directly to your bank account.</p>
+                <h3><?php _e('step3_title'); ?></h3>
+                <p><?php _e('step3_desc'); ?></p>
             </div>
         </div>
     </div>
@@ -176,13 +176,13 @@
             </div>
             <div class="benefit-card">
                 <i class="fas fa-headset"></i>
-                <h3>24/7 Support</h3>
-                <p>Our customer service team is always here to help</p>
+                <h3><?php _e('benefit_support_title'); ?></h3>
+                <p><?php _e('benefit_support_desc'); ?></p>
             </div>
             <div class="benefit-card">
                 <i class="fas fa-mobile-alt"></i>
-                <h3>Easy Online Process</h3>
-                <p>Apply anytime, anywhere from your device</p>
+                <h3><?php _e('benefit_online_title'); ?></h3>
+                <p><?php _e('benefit_online_desc'); ?></p>
             </div>
         </div>
     </div>
@@ -331,8 +331,8 @@
 <section class="testimonials">
     <div class="container">
         <div class="section-header">
-            <h2>What Our Customers Say</h2>
-            <p>Real stories from real people</p>
+            <h2><?php _e('testimonials_title'); ?></h2>
+            <p><?php _e('testimonials_subtitle'); ?></p>
         </div>
         
         <div class="testimonials-grid">
@@ -344,14 +344,14 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p>"Quick and hassle-free process. I got my business loan approved within a day and the funds were transferred immediately. Highly recommended!"</p>
+                <p>"<?php _e('testimonial1_text'); ?>"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="author-info">
-                        <h4>Ahmad Rahman</h4>
-                        <span>Business Owner</span>
+                        <h4><?php _e('testimonial1_name'); ?></h4>
+                        <span><?php _e('testimonial1_role'); ?></span>
                     </div>
                 </div>
             </div>
@@ -364,14 +364,14 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p>"The customer service was excellent and the interest rates were very competitive. I managed to get my dream home thanks to QuickLoan!"</p>
+                <p>"<?php _e('testimonial2_text'); ?>"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="author-info">
-                        <h4>Sarah Lee</h4>
-                        <span>Teacher</span>
+                        <h4><?php _e('testimonial2_name'); ?></h4>
+                        <span><?php _e('testimonial2_role'); ?></span>
                     </div>
                 </div>
             </div>
@@ -384,14 +384,14 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p>"Easy online application and transparent terms. No hidden charges, just straightforward loan solutions. Best financial partner!"</p>
+                <p>"<?php _e('testimonial3_text'); ?>"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="author-info">
-                        <h4>David Tan</h4>
-                        <span>Engineer</span>
+                        <h4><?php _e('testimonial3_name'); ?></h4>
+                        <span><?php _e('testimonial3_role'); ?></span>
                     </div>
                 </div>
             </div>
@@ -403,9 +403,9 @@
 <section class="cta">
     <div class="container">
         <div class="cta-content">
-            <h2>Ready to Get Started?</h2>
-            <p>Join thousands of satisfied customers and get your loan approved today!</p>
-            <a href="#apply" class="btn btn-light btn-large">Apply Now</a>
+            <h2><?php _e('cta_title'); ?></h2>
+            <p><?php _e('cta_subtitle'); ?></p>
+            <a href="#apply" class="btn btn-light btn-large"><?php _e('cta_button'); ?></a>
         </div>
     </div>
 </section>
