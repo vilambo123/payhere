@@ -111,7 +111,7 @@ function get_available_languages() {
             'code' => 'en',
             'name' => 'English',
             'native_name' => 'English',
-            'flag' => '🇬🇧'
+            'flag' => '🇺🇸'
         ],
         'my' => [
             'code' => 'my',

@@ -124,14 +124,15 @@ body {
 }
 
 .btn-secondary {
-    background: transparent;
+    background: white;
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 2px solid white;
 }
 
 .btn-secondary:hover {
     background: var(--primary-color);
     color: white;
+    border-color: var(--primary-color);
 }
 
 .btn-outline {

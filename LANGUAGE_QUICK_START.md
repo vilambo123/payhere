@@ -2,7 +2,7 @@
 
 ## ✅ **3 Languages Ready!**
 
-- 🇬🇧 **English** (Default)
+- 🇺🇸 **English** (Default)
 - 🇲🇾 **Bahasa Melayu**
 - 🇨🇳 **简体中文** (Simplified Chinese)
 
@@ -21,7 +21,7 @@
    - Look for the **globe icon** 🌍 with current language (EN/MY/ZH)
 
 3. **Click to see options:**
-   - 🇬🇧 English
+   - 🇺🇸 English
    - 🇲🇾 Bahasa Melayu
    - 🇨🇳 简体中文
 
@@ -192,7 +192,7 @@ Done! ✅
 
 | Language | Code | Flag | Native Name |
 |----------|------|------|-------------|
-| English | `en` | 🇬🇧 | English |
+| English | `en` | 🇺🇸 | English |
 | Malay | `my` | 🇲🇾 | Bahasa Melayu |
 | Chinese | `zh` | 🇨🇳 | 简体中文 |
 
