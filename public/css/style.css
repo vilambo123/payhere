@@ -368,7 +368,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem auto;
 }
 
 .service-card.featured .service-icon {
@@ -388,11 +388,13 @@ body {
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: var(--dark-color);
+    text-align: center;
 }
 
 .service-card p {
     margin-bottom: 1.5rem;
     color: var(--text-color);
+    text-align: center;
 }
 
 .service-features {

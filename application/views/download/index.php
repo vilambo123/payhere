@@ -150,10 +150,11 @@
     
     .app-info {
         display: flex;
-        gap: 32px;
+        flex-direction: column;
+        align-items: center;
         padding: 32px 40px;
         border-bottom: 1px solid #dadce0;
-        align-items: flex-start;
+        text-align: center;
     }
     
     .app-icon {
@@ -167,11 +168,12 @@
         color: white;
         font-size: 4rem;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-        flex-shrink: 0;
+        margin-bottom: 20px;
     }
     
     .app-details {
-        flex: 1;
+        width: 100%;
+        max-width: 700px;
     }
     
     .app-details h2 {
@@ -179,19 +181,22 @@
         font-weight: 400;
         color: #202124;
         margin: 0 0 8px 0;
+        text-align: center;
     }
     
     .app-developer {
         color: #34a853;
         font-size: 0.875rem;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         font-weight: 500;
+        text-align: center;
     }
     
     .app-stats {
         display: flex;
         gap: 48px;
-        margin: 16px 0 0 0;
+        margin: 20px 0;
+        justify-content: center;
     }
     
     .stat-item {
@@ -694,7 +699,7 @@
                         </div>
                     </div>
                     
-                    <p style="color: #5f6368; line-height: 1.6;">
+                    <p style="color: #5f6368; line-height: 1.6; text-align: left; margin-top: 20px;">
                         <?php _e('download_app_description'); ?>
                     </p>
                 </div>

@@ -86,7 +86,9 @@
                     <li><i class="fas fa-check"></i> Interest from <?php echo number_format($loan['min_interest_rate'], 1); ?>% p.a.</li>
                     <li><i class="fas fa-check"></i> Tenure up to <?php echo $loan['max_tenure_years']; ?> years</li>
                 </ul>
-                <a href="#apply" class="btn <?php echo $is_featured ? 'btn-primary' : 'btn-outline'; ?>"><?php _e('nav_apply'); ?></a>
+                <div style="text-align: center;">
+                    <a href="#apply" class="btn <?php echo $is_featured ? 'btn-primary' : 'btn-outline'; ?>"><?php _e('nav_apply'); ?></a>
+                </div>
             </div>
             <?php 
                 endforeach;
