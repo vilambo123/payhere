@@ -377,22 +377,262 @@
     }
     
     @media (max-width: 768px) {
-        .app-info {
-            grid-template-columns: 1fr;
+        .download-navbar {
+            padding: 12px 0;
+        }
+        
+        .download-nav-content {
+            padding: 0 16px;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+        
+        .download-logo {
+            font-size: 1.1rem;
+        }
+        
+        .download-logo i {
+            font-size: 1.5rem;
+        }
+        
+        .download-breadcrumb a {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+        }
+        
+        .download-hero {
+            height: auto;
+            min-height: 200px;
+        }
+        
+        .hero-content {
+            flex-direction: column;
             text-align: center;
+            padding: 32px 20px;
+            gap: 20px;
+        }
+        
+        .hero-text h1 {
+            font-size: 1.5rem;
+            line-height: 1.3;
+        }
+        
+        .hero-text p {
+            font-size: 0.9rem;
+            max-width: 100%;
+        }
+        
+        .hero-image {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .hero-image i {
+            font-size: 5rem !important;
+        }
+        
+        .download-container {
+            margin: 12px;
+            border-radius: 8px;
+        }
+        
+        .app-info {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px 20px;
+            gap: 20px;
         }
         
         .app-icon {
+            width: 120px;
+            height: 120px;
+            font-size: 3.5rem;
             margin: 0 auto;
         }
         
+        .app-details h2 {
+            font-size: 1.5rem;
+        }
+        
+        .app-developer {
+            font-size: 0.8rem;
+        }
+        
         .app-stats {
-            flex-direction: column;
-            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            min-width: 80px;
+        }
+        
+        .stat-value {
+            font-size: 0.8rem;
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+        }
+        
+        .rating-stars {
+            font-size: 0.75rem;
+        }
+        
+        .download-button-container {
+            padding: 20px 16px 24px 16px;
+        }
+        
+        .download-btn {
+            width: 100%;
+            max-width: 100%;
+            padding: 16px 24px;
+            font-size: 1rem;
+        }
+        
+        .app-features {
+            padding: 24px 20px;
+        }
+        
+        .app-features h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
         .features-grid {
             grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 100%;
+        }
+        
+        .feature-item {
+            gap: 12px;
+        }
+        
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
+        }
+        
+        .feature-content h4 {
+            font-size: 0.95rem;
+        }
+        
+        .feature-content p {
+            font-size: 0.85rem;
+        }
+        
+        .app-screenshots {
+            padding: 24px 16px;
+        }
+        
+        .app-screenshots h3 {
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .screenshots-scroll {
+            gap: 12px;
+            padding: 10px 4px;
+        }
+        
+        .screenshot {
+            width: 160px;
+            height: 320px;
+            border-radius: 20px;
+            border-width: 6px;
+            font-size: 2rem;
+        }
+        
+        .security-note {
+            margin: 20px 16px 32px 16px;
+            padding: 14px 16px;
+        }
+        
+        .security-note h4 {
+            font-size: 0.85rem;
+        }
+        
+        .security-note p {
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+    }
+    
+    /* Small mobile devices */
+    @media (max-width: 480px) {
+        .download-container {
+            margin: 8px;
+        }
+        
+        .hero-text h1 {
+            font-size: 1.3rem;
+        }
+        
+        .hero-text p {
+            font-size: 0.85rem;
+        }
+        
+        .hero-image {
+            width: 100px;
+            height: 100px;
+        }
+        
+        .hero-image i {
+            font-size: 4rem !important;
+        }
+        
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            font-size: 3rem;
+        }
+        
+        .app-details h2 {
+            font-size: 1.25rem;
+        }
+        
+        .app-stats {
+            gap: 16px;
+        }
+        
+        .stat-item {
+            min-width: 70px;
+        }
+        
+        .stat-value {
+            font-size: 0.75rem;
+        }
+        
+        .stat-label {
+            font-size: 0.65rem;
+        }
+        
+        .download-btn {
+            font-size: 0.95rem;
+            padding: 14px 20px;
+        }
+        
+        .feature-item {
+            gap: 10px;
+        }
+        
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 1rem;
+        }
+        
+        .screenshot {
+            width: 140px;
+            height: 280px;
+            border-width: 5px;
+            font-size: 1.8rem;
         }
     }
 </style>
