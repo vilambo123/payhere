@@ -465,9 +465,6 @@
                     <a href="<?php echo base_url('index.php/admin'); ?>" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancel
                     </a>
-                    <button type="button" class="btn btn-danger" id="deleteBtn" style="margin-left: auto;">
-                        <i class="fas fa-trash"></i> Delete Inquiry
-                    </button>
                 </div>
             </form>
             

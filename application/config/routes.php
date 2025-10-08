@@ -20,6 +20,12 @@ $route['settings/update-loan-type/(:num)'] = 'settings/update_loan_type/$1';
 // Language routes
 $route['language/switch'] = 'language/switch_language';
 
+// Auth routes
+$route['auth/login'] = 'auth/login';
+$route['auth/do_login'] = 'auth/do_login';
+$route['auth/logout'] = 'auth/logout';
+$route['login'] = 'auth/login';
+
 // API routes
 $route['api'] = 'api/index';
 $route['api/inquiries'] = 'api/inquiries';
