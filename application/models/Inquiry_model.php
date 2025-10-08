@@ -68,6 +68,17 @@ class Inquiry_model {
     }
     
     /**
+     * Update inquiry data
+     * 
+     * @param int $id Inquiry ID
+     * @param array $data Data to update
+     * @return bool Success status
+     */
+    public function update($id, $data) {
+        return $this->db->update($this->table, $data, ['id' => $id]);
+    }
+    
+    /**
      * Count total inquiries
      * 
      * @param array $filters Optional filters

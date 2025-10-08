@@ -319,9 +319,9 @@
                         </td>
                         <td><?php echo date('d M Y', strtotime($inquiry['created_at'])); ?></td>
                         <td class="actions">
-                            <button class="btn btn-primary" onclick="viewDetails(<?php echo $inquiry['id']; ?>)">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                            <a href="<?php echo base_url('index.php/admin/view/' . $inquiry['id']); ?>" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> View
+                            </a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -340,9 +340,10 @@
     </div>
     
     <script>
-        function viewDetails(id) {
-            alert('View details for inquiry #' + id + '\n\nThis feature can be expanded to show full inquiry details in a modal or separate page.');
-        }
+        // Auto-refresh statistics every 30 seconds
+        setTimeout(function() {
+            location.reload();
+        }, 30000);
     </script>
 </body>
 </html>
