@@ -153,18 +153,32 @@ class Inquiry_model {
      * 
      * @param string $email Email address
      * @param string $ic_number IC number (optional)
+     * @param string $phone Phone number (optional)
      * @return array|null Pending application or null
      */
-    public function check_pending_application($email, $ic_number = null) {
-        $sql = "SELECT * FROM `{$this->table}` 
-                WHERE `status` = 'pending' 
-                AND (`email` = '" . $this->db->escape($email) . "'";
+    public function check_pending_application($email, $ic_number = null, $phone = null) {
+        $conditions = [];
         
-        if (!empty($ic_number)) {
-            $sql .= " OR `ic_number` = '" . $this->db->escape($ic_number) . "'";
+        if (!empty($email)) {
+            $conditions[] = "`email` = '" . $this->db->escape($email) . "'";
         }
         
-        $sql .= ") ORDER BY `created_at` DESC LIMIT 1";
+        if (!empty($ic_number)) {
+            $conditions[] = "`ic_number` = '" . $this->db->escape($ic_number) . "'";
+        }
+        
+        if (!empty($phone)) {
+            $conditions[] = "`phone` = '" . $this->db->escape($phone) . "'";
+        }
+        
+        if (empty($conditions)) {
+            return null;
+        }
+        
+        $sql = "SELECT * FROM `{$this->table}` 
+                WHERE `status` = 'pending' 
+                AND (" . implode(' OR ', $conditions) . ") 
+                ORDER BY `created_at` DESC LIMIT 1";
         
         $result = $this->db->query($sql);
         

@@ -128,18 +128,31 @@ class Home extends CI_Controller {
                 return;
             }
             
-            // Check for existing pending application
+            // Check for existing pending application (email, IC, or phone)
             $email = $this->input->post('email');
+            $formatted_phone = format_malaysian_phone($phone);
             $inquiry_model = new Inquiry_model();
-            $pending = $inquiry_model->check_pending_application($email, $ic_number);
+            $pending = $inquiry_model->check_pending_application($email, $ic_number, $formatted_phone);
             
             if ($pending) {
                 $submission_date = date('d M Y', strtotime($pending['created_at']));
+                
+                // Determine which field matched
+                $matched_field = '';
+                if ($pending['email'] == $email) {
+                    $matched_field = 'email address';
+                } elseif ($pending['ic_number'] == format_malaysian_ic($ic_number)) {
+                    $matched_field = 'IC number';
+                } elseif ($pending['phone'] == $formatted_phone) {
+                    $matched_field = 'phone number';
+                }
+                
                 echo json_encode([
                     'success' => false,
-                    'message' => "We have received your application submitted on {$submission_date}. Our team is currently reviewing your request and will contact you within 2-3 business days. We appreciate your patience. If you have any urgent queries, please call us at " . (isset($GLOBALS['site_phone']) ? $GLOBALS['site_phone'] : '+60 3-1234 5678') . ".",
+                    'message' => "We have received your application (matching {$matched_field}) submitted on {$submission_date}. Our team is currently reviewing your request and will contact you within 2-3 business days. We appreciate your patience. If you have any urgent queries, please call us at " . (isset($GLOBALS['site_phone']) ? $GLOBALS['site_phone'] : '+60 3-1234 5678') . ".",
                     'pending_application_id' => $pending['id'],
-                    'submission_date' => $submission_date
+                    'submission_date' => $submission_date,
+                    'matched_field' => $matched_field
                 ]);
                 return;
             }
