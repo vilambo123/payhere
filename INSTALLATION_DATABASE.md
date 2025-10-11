@@ -45,23 +45,19 @@ After import, you should see:
 
 ### 6. Database Configuration
 
-The database is already configured in `application/config/database.php`:
+The database configuration uses environment variables for security. Set the following:
 
-```php
-$db['default'] = array(
-    'hostname' => 'localhost',
-    'username' => 'root',
-    'password' => '',  // Default XAMPP password is empty
-    'database' => 'loan_system',
-    'dbdriver' => 'mysqli',
-    'port' => 3306
-);
-```
+- `DB_HOST` - Database hostname (default: localhost)
+- `DB_USERNAME` - Database username (required)
+- `DB_PASSWORD` - Database password (required)
+- `DB_NAME` - Database name (default: loan_system)
+- `DB_PORT` - Database port (default: 3306)
 
-**If you have a different MySQL password:**
-1. Open `application/config/database.php`
-2. Change the `'password'` value to your MySQL root password
-3. Save the file
+**To set environment variables:**
+
+1. Create a `.env` file or set system environment variables
+2. Or modify your web server configuration to set these variables
+3. The application will read these from `getenv()` function
 
 ### 7. Test Database Connection
 
@@ -70,7 +66,12 @@ Create a test file `test-database.php` in your root folder:
 ```php
 <?php
 // Test database connection
-$conn = new mysqli('localhost', 'root', '', 'loan_system');
+$host = getenv('DB_HOST') ?: 'localhost';
+$username = getenv('DB_USERNAME');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_NAME') ?: 'loan_system';
+
+$conn = new mysqli($host, $username, $password, $database);
 
 if ($conn->connect_error) {
     die("❌ Connection failed: " . $conn->connect_error);
@@ -124,11 +125,11 @@ Store website configuration (email, phone, etc.)
 
 ## Common Issues & Solutions
 
-### Issue 1: "Access Denied for user 'root'@'localhost'"
+### Issue 1: "Access Denied for user"
 **Solution:** 
-- Your MySQL root account has a password
-- Edit `application/config/database.php`
-- Update the `password` field with your MySQL password
+- Check your database credentials are correctly set
+- Set the environment variables: `DB_USERNAME` and `DB_PASSWORD`
+- Ensure the database user has proper permissions
 
 ### Issue 2: "Database 'loan_system' doesn't exist"
 **Solution:**
@@ -161,11 +162,12 @@ Store website configuration (email, phone, etc.)
 ## Security Notes
 
 ⚠️ **Important for Production:**
-1. Change MySQL root password
-2. Create a dedicated database user (not root)
+1. Always use strong database passwords
+2. Create a dedicated database user with limited permissions
 3. Enable CSRF protection in `application/config/config.php`
-4. Use environment variables for database credentials
+4. Keep environment variables secure and never commit them to version control
 5. Add authentication for admin pages
+6. Use `.env` files for local development (add to `.gitignore`)
 
 ## Next Steps
 

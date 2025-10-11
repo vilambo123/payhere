@@ -92,18 +92,16 @@ A modern, responsive landing page for financial loan services built with PHP usi
    
    📖 **Detailed guide:** See [INSTALLATION_DATABASE.md](INSTALLATION_DATABASE.md)
 
-#### 3. **Configure Database** (Already set for XAMPP defaults)
+#### 3. **Configure Database**
    
-   Open `application/config/database.php` (only if you changed MySQL settings):
-   ```php
-   $db['default'] = array(
-       'hostname' => 'localhost',
-       'username' => 'root',
-       'password' => '',  // Change if you set a MySQL password
-       'database' => 'loan_system',
-       'port' => 3306
-   );
-   ```
+   Set your database credentials using environment variables:
+   - `DB_HOST` - Database hostname (default: localhost)
+   - `DB_USERNAME` - Database username
+   - `DB_PASSWORD` - Database password
+   - `DB_NAME` - Database name (default: loan_system)
+   - `DB_PORT` - Database port (default: 3306)
+   
+   The database configuration in `application/config/database.php` uses environment variables for security.
 
 #### 4. **Test Database Connection**
    
