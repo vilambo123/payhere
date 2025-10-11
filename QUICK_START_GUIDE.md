@@ -105,7 +105,7 @@
 ## 🛠️ Troubleshooting
 
 ### Issue: Page shows "Access Denied"
-**Solution:** MySQL password is set. Edit `application/config/database.php` and add your password.
+**Solution:** Database credentials not configured. Set environment variables `DB_USERNAME` and `DB_PASSWORD` with your database credentials.
 
 ### Issue: CSS/JS not loading
 **Solution:** Check that you're accessing via `http://localhost/payhere/` (not file://)
@@ -168,7 +168,7 @@ Edit `application/views/layouts/header.php`:
 
 ### Change Database Name
 1. Edit `database_setup.sql` - Change `loan_system` to your name
-2. Edit `application/config/database.php` - Update database name
+2. Set environment variable `DB_NAME` to your database name
 3. Re-import SQL file
 
 ### Add More Loan Types
@@ -207,7 +207,8 @@ created_at      TIMESTAMP
 - [ ] Document upload functionality
 
 ### For Production
-- [ ] Set MySQL password
+- [ ] Configure database credentials via environment variables
+- [ ] Use strong database passwords
 - [ ] Enable CSRF protection
 - [ ] Add SSL certificate (HTTPS)
 - [ ] Configure email settings
