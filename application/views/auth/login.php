@@ -154,53 +154,6 @@
         .password-toggle:hover {
             color: #667eea;
         }
-        .divider {
-            margin: 1.5rem 0;
-            text-align: center;
-            position: relative;
-        }
-        .divider::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 1px;
-            background: #e2e8f0;
-        }
-        .divider span {
-            background: white;
-            padding: 0 1rem;
-            position: relative;
-            color: #999;
-            font-size: 0.875rem;
-        }
-        .info-box {
-            background: #f0f9ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-        }
-        .info-box h3 {
-            color: #1e40af;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .info-box p {
-            color: #1e40af;
-            font-size: 0.875rem;
-            margin: 0.25rem 0;
-        }
-        .info-box code {
-            background: #dbeafe;
-            padding: 0.125rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-        }
         @media (max-width: 480px) {
             body {
                 padding: 1rem;
@@ -272,12 +225,6 @@
                     Login to Dashboard
                 </button>
             </form>
-            
-            <div class="info-box">
-                <h3><i class="fas fa-info-circle"></i> Default Credentials</h3>
-                <p>Username: <code>admin</code></p>
-                <p>Password: <code>admin123</code></p>
-            </div>
         </div>
         
         <div class="login-footer">
