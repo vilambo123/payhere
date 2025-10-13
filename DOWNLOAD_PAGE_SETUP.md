@@ -65,16 +65,18 @@ https://google.com (temporary - replace with actual APK URL)
    ↓
 3. Success message shown: "Thank you! We have received your application..."
    ↓
-4. After 1 second: Message updates: "...Redirecting to download page..."
+4. After 0.5 seconds: Message updates: "...Opening download page in new tab..."
    ↓
-5. After 2 seconds total: Redirect to /download page
+5. After 1 second: Download page opens in NEW TAB/WINDOW
    ↓
-6. Download page shows (Google Play Store style)
+6. User sees full Google Play Store style page
    ↓
 7. User clicks "Download APK" button
    ↓
 8. APK download starts from configured URL
 ```
+
+**Note:** Original application page stays open in background!
 
 ---
 
@@ -82,7 +84,12 @@ https://google.com (temporary - replace with actual APK URL)
 
 ### **Sections:**
 
-#### **1. Header (Purple Gradient)**
+#### **0. Google Play Store Navigation Bar**
+```
+[Google Play Icon] QuickLoan    ← Home
+```
+
+#### **1. Header (Green Gradient - Play Store Style)**
 ```
 Download Our Mobile App
 Manage your loans on the go with our easy-to-use mobile application

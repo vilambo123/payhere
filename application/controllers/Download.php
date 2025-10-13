@@ -46,8 +46,7 @@ class Download extends CI_Controller {
         $data['current_lang'] = $current_lang;
         $data['translations_json'] = get_language_json();
         
-        $this->load->view('layouts/header', $data);
+        // Load standalone download page (no header/footer)
         $this->load->view('download/index', $data);
-        $this->load->view('layouts/footer', $data);
     }
 }

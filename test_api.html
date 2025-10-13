@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .response {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+        .response pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+        .success {
+            border-color: #34d399;
+            background: #d1fae5;
+        }
+        .error {
+            border-color: #f87171;
+            background: #fee2e2;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .info {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .info strong {
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 API Test Page</h1>
+        
+        <div class="card">
+            <div class="info">
+                <strong>⚠️ Important:</strong> Before testing, make sure you've:
+                <ol style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Run <code>add_export_flag.sql</code> in phpMyAdmin</li>
+                    <li>Changed the API key in <code>application/controllers/Api.php</code></li>
+                    <li>Updated the API key below</li>
+                </ol>
+            </div>
+            
+            <h2>🔑 Configuration</h2>
+            <div class="form-group">
+                <label>API Key</label>
+                <input type="text" id="apiKey" value="your_secure_api_key_here_change_in_production" placeholder="Enter your API key">
+            </div>
+            
+            <div class="form-group">
+                <label>Base URL</label>
+                <input type="text" id="baseUrl" value="http://localhost/payhere/index.php/api" placeholder="API base URL">
+            </div>
+        </div>
+        
+        <div class="grid">
+            <!-- Get Inquiries -->
+            <div class="card">
+                <h2>📋 Get Inquiries</h2>
+                <div class="form-group">
+                    <label>Filters</label>
+                    <input type="text" id="getFilters" value="only_unexported=1" placeholder="e.g., only_unexported=1&limit=10">
+                </div>
+                <button onclick="getInquiries()">Get Inquiries</button>
+                <div id="getResponse" class="response" style="display: none;"></div>
+            </div>
+            
+            <!-- Get & Auto Mark -->
+            <div class="card">
+                <h2>📋✅ Get & Auto Mark</h2>
+                <div class="form-group">
+                    <label>Filters</label>
+                    <input type="text" id="autoMarkFilters" value="only_unexported=1&auto_mark=1" placeholder="only_unexported=1&auto_mark=1">
+                </div>
+                <button onclick="getAndAutoMark()">Get & Mark as Exported</button>
+                <div id="autoMarkResponse" class="response" style="display: none;"></div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <!-- Mark as Exported -->
+            <div class="card">
+                <h2>✅ Mark as Exported</h2>
+                <div class="form-group">
+                    <label>Inquiry IDs (comma-separated)</label>
+                    <input type="text" id="markIds" value="1,2,3" placeholder="e.g., 1,2,3">
+                </div>
+                <button onclick="markExported()">Mark as Exported</button>
+                <div id="markResponse" class="response" style="display: none;"></div>
+            </div>
+            
+            <!-- Reset Export Flag -->
+            <div class="card">
+                <h2>🔄 Reset Export Flag</h2>
+                <div class="form-group">
+                    <label>Inquiry IDs (leave empty for all)</label>
+                    <input type="text" id="resetIds" value="" placeholder="e.g., 1,2,3 or leave empty">
+                </div>
+                <button onclick="resetExport()">Reset Export Flag</button>
+                <div id="resetResponse" class="response" style="display: none;"></div>
+            </div>
+        </div>
+        
+        <!-- API Documentation -->
+        <div class="card">
+            <h2>📖 API Documentation</h2>
+            <button onclick="getDocumentation()">Get API Docs</button>
+            <div id="docsResponse" class="response" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        function getApiKey() {
+            return document.getElementById('apiKey').value;
+        }
+        
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+        
+        function showResponse(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = 'response ' + (isError ? 'error' : 'success');
+            element.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        }
+        
+        async function getInquiries() {
+            const filters = document.getElementById('getFilters').value;
+            const url = `${getBaseUrl()}/inquiries?${filters}`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + getApiKey()
+                    }
+                });
+                
+                const data = await response.json();
+                showResponse('getResponse', data, !response.ok);
+            } catch (error) {
+                showResponse('getResponse', { error: error.message }, true);
+            }
+        }
+        
+        async function getAndAutoMark() {
+            const filters = document.getElementById('autoMarkFilters').value;
+            const url = `${getBaseUrl()}/inquiries?${filters}`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + getApiKey()
+                    }
+                });
+                
+                const data = await response.json();
+                showResponse('autoMarkResponse', data, !response.ok);
+            } catch (error) {
+                showResponse('autoMarkResponse', { error: error.message }, true);
+            }
+        }
+        
+        async function markExported() {
+            const idsInput = document.getElementById('markIds').value;
+            const ids = idsInput.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+            
+            if (ids.length === 0) {
+                showResponse('markResponse', { error: 'Please enter valid IDs' }, true);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${getBaseUrl()}/mark_exported`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getApiKey(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ids: ids })
+                });
+                
+                const data = await response.json();
+                showResponse('markResponse', data, !response.ok);
+            } catch (error) {
+                showResponse('markResponse', { error: error.message }, true);
+            }
+        }
+        
+        async function resetExport() {
+            const idsInput = document.getElementById('resetIds').value;
+            const ids = idsInput ? idsInput.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id)) : [];
+            
+            try {
+                const response = await fetch(`${getBaseUrl()}/reset_export`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getApiKey(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ids: ids })
+                });
+                
+                const data = await response.json();
+                showResponse('resetResponse', data, !response.ok);
+            } catch (error) {
+                showResponse('resetResponse', { error: error.message }, true);
+            }
+        }
+        
+        async function getDocumentation() {
+            try {
+                const response = await fetch(`${getBaseUrl()}`);
+                const data = await response.json();
+                showResponse('docsResponse', data, !response.ok);
+            } catch (error) {
+                showResponse('docsResponse', { error: error.message }, true);
+            }
+        }
+    </script>
+</body>
+</html>

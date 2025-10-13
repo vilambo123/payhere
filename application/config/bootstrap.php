@@ -190,25 +190,55 @@ if (strpos($uri, $config['index_page'].'/') === 0) {
 // Match route
 $controller = $route['default_controller'];
 $method = 'index';
+$params = [];
 $matched = false;
 
 if (!empty($uri)) {
-    // Try to match custom routes
+    // Try to match custom routes with parameters
     foreach ($route as $pattern => $target) {
         if ($pattern !== 'default_controller' && $pattern !== '404_override' && $pattern !== 'translate_uri_dashes') {
-            if ($uri === $pattern) {
-                list($controller, $method) = explode('/', $target);
+            // Convert CodeIgniter route pattern to regex
+            $regex_pattern = str_replace(['(:num)', ':num'], '([0-9]+)', $pattern);
+            $regex_pattern = str_replace(['(:any)', ':any'], '(.+)', $regex_pattern);
+            $regex_pattern = '#^' . $regex_pattern . '$#';
+            
+            if (preg_match($regex_pattern, $uri, $matches)) {
+                // Remove the full match
+                array_shift($matches);
+                
+                // Parse target
+                if (strpos($target, '$') !== false) {
+                    // Replace $1, $2 etc with captured groups
+                    for ($i = 0; $i < count($matches); $i++) {
+                        $target = str_replace('$' . ($i + 1), $matches[$i], $target);
+                    }
+                }
+                
+                $target_parts = explode('/', $target);
+                $controller = $target_parts[0];
+                $method = isset($target_parts[1]) ? $target_parts[1] : 'index';
+                
+                // Remaining parts are parameters
+                if (count($target_parts) > 2) {
+                    $params = array_slice($target_parts, 2);
+                }
+                
                 $matched = true;
                 break;
             }
         }
     }
     
-    // If no custom route matched, try default controller/method
+    // If no custom route matched, try default controller/method/params
     if (!$matched && $controller === $route['default_controller'] && !empty($uri)) {
         $segments = explode('/', $uri);
         $controller = ucfirst($segments[0]);
         $method = isset($segments[1]) ? $segments[1] : 'index';
+        
+        // Remaining segments are parameters
+        if (count($segments) > 2) {
+            $params = array_slice($segments, 2);
+        }
     }
 }
 
@@ -225,7 +255,8 @@ if (class_exists($controller)) {
     $instance = new $controller();
     
     if (method_exists($instance, $method)) {
-        $instance->$method();
+        // Call method with parameters
+        call_user_func_array([$instance, $method], $params);
     } else {
         // Method not found
         header('HTTP/1.1 404 Not Found');

@@ -6,6 +6,17 @@ class Settings extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
+        $this->check_login();
+    }
+    
+    /**
+     * Check if admin is logged in
+     */
+    private function check_login() {
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header('Location: ' . base_url('index.php/auth/login'));
+            exit;
+        }
     }
 
     /**

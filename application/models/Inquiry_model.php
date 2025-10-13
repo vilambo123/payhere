@@ -37,7 +37,7 @@ class Inquiry_model {
     /**
      * Get all inquiries with optional filters
      * 
-     * @param array $filters Optional filters (status, loan_type, limit, offset)
+     * @param array $filters Optional filters (status, loan_type, limit, offset, is_exported)
      * @return array List of inquiries
      */
     public function get_all($filters = []) {
@@ -53,6 +53,10 @@ class Inquiry_model {
             $where['loan_type'] = $filters['loan_type'];
         }
         
+        if (isset($filters['is_exported'])) {
+            $where['is_exported'] = $filters['is_exported'];
+        }
+        
         return $this->db->get_all($this->table, $where, $limit, $offset, 'created_at DESC');
     }
     
@@ -65,6 +69,17 @@ class Inquiry_model {
      */
     public function update_status($id, $status) {
         return $this->db->update($this->table, ['status' => $status], ['id' => $id]);
+    }
+    
+    /**
+     * Update inquiry data
+     * 
+     * @param int $id Inquiry ID
+     * @param array $data Data to update
+     * @return bool Success status
+     */
+    public function update($id, $data) {
+        return $this->db->update($this->table, $data, ['id' => $id]);
     }
     
     /**
@@ -138,18 +153,32 @@ class Inquiry_model {
      * 
      * @param string $email Email address
      * @param string $ic_number IC number (optional)
+     * @param string $phone Phone number (optional)
      * @return array|null Pending application or null
      */
-    public function check_pending_application($email, $ic_number = null) {
-        $sql = "SELECT * FROM `{$this->table}` 
-                WHERE `status` = 'pending' 
-                AND (`email` = '" . $this->db->escape($email) . "'";
+    public function check_pending_application($email, $ic_number = null, $phone = null) {
+        $conditions = [];
         
-        if (!empty($ic_number)) {
-            $sql .= " OR `ic_number` = '" . $this->db->escape($ic_number) . "'";
+        if (!empty($email)) {
+            $conditions[] = "`email` = '" . $this->db->escape($email) . "'";
         }
         
-        $sql .= ") ORDER BY `created_at` DESC LIMIT 1";
+        if (!empty($ic_number)) {
+            $conditions[] = "`ic_number` = '" . $this->db->escape($ic_number) . "'";
+        }
+        
+        if (!empty($phone)) {
+            $conditions[] = "`phone` = '" . $this->db->escape($phone) . "'";
+        }
+        
+        if (empty($conditions)) {
+            return null;
+        }
+        
+        $sql = "SELECT * FROM `{$this->table}` 
+                WHERE `status` = 'pending' 
+                AND (" . implode(' OR ', $conditions) . ") 
+                ORDER BY `created_at` DESC LIMIT 1";
         
         $result = $this->db->query($sql);
         
@@ -168,5 +197,58 @@ class Inquiry_model {
      */
     public function get_by_ic($ic_number) {
         return $this->db->get_all($this->table, ['ic_number' => $ic_number], null, 0, 'created_at DESC');
+    }
+    
+    /**
+     * Mark inquiries as exported
+     * 
+     * @param array $ids Array of inquiry IDs
+     * @return bool Success status
+     */
+    public function mark_as_exported($ids) {
+        if (empty($ids) || !is_array($ids)) {
+            return false;
+        }
+        
+        $ids_string = implode(',', array_map('intval', $ids));
+        $sql = "UPDATE `{$this->table}` 
+                SET `is_exported` = 1, `exported_at` = NOW() 
+                WHERE `id` IN ($ids_string)";
+        
+        $result = $this->db->query($sql);
+        return $result !== false;
+    }
+    
+    /**
+     * Get unexported inquiries
+     * 
+     * @param array $filters Optional filters (status, loan_type, limit, offset)
+     * @return array List of unexported inquiries
+     */
+    public function get_unexported($filters = []) {
+        $filters['is_exported'] = 0;
+        return $this->get_all($filters);
+    }
+    
+    /**
+     * Reset export flag for testing/debugging
+     * 
+     * @param array $ids Array of inquiry IDs (optional, resets all if empty)
+     * @return bool Success status
+     */
+    public function reset_export_flag($ids = []) {
+        if (empty($ids)) {
+            // Reset all
+            $sql = "UPDATE `{$this->table}` 
+                    SET `is_exported` = 0, `exported_at` = NULL";
+        } else {
+            $ids_string = implode(',', array_map('intval', $ids));
+            $sql = "UPDATE `{$this->table}` 
+                    SET `is_exported` = 0, `exported_at` = NULL 
+                    WHERE `id` IN ($ids_string)";
+        }
+        
+        $result = $this->db->query($sql);
+        return $result !== false;
     }
 }

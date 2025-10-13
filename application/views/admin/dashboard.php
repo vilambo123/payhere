@@ -177,13 +177,23 @@
     <div class="header">
         <h1><i class="fas fa-chart-line"></i> Admin Dashboard</h1>
         <p class="subtitle">Manage loan inquiries and applications</p>
-        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-            <a href="<?php echo base_url(); ?>" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Website
-            </a>
-            <a href="<?php echo base_url('index.php/settings'); ?>" class="back-link">
-                <i class="fas fa-cog"></i> Settings
-            </a>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 1rem;">
+                <a href="<?php echo base_url(); ?>" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+                <a href="<?php echo base_url('index.php/settings'); ?>" class="back-link">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <span class="back-link" style="opacity: 0.8;">
+                    <i class="fas fa-user"></i> <?php echo isset($_SESSION['admin_username']) ? htmlspecialchars($_SESSION['admin_username']) : 'Admin'; ?>
+                </span>
+                <a href="<?php echo base_url('index.php/auth/logout'); ?>" class="back-link">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
     </div>
     
@@ -319,9 +329,9 @@
                         </td>
                         <td><?php echo date('d M Y', strtotime($inquiry['created_at'])); ?></td>
                         <td class="actions">
-                            <button class="btn btn-primary" onclick="viewDetails(<?php echo $inquiry['id']; ?>)">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                            <a href="<?php echo base_url('index.php/admin/view/' . $inquiry['id']); ?>" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> View
+                            </a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -340,9 +350,10 @@
     </div>
     
     <script>
-        function viewDetails(id) {
-            alert('View details for inquiry #' + id + '\n\nThis feature can be expanded to show full inquiry details in a modal or separate page.');
-        }
+        // Auto-refresh statistics every 30 seconds
+        setTimeout(function() {
+            location.reload();
+        }, 30000);
     </script>
 </body>
 </html>
