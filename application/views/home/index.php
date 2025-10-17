@@ -42,8 +42,8 @@
                 <div class="hero-card">
                     <div class="card-glow"></div>
                     <i class="fas fa-shield-alt"></i>
-                    <h3>100% Secure</h3>
-                    <p>Your data is protected with bank-level encryption</p>
+                    <h3><?php _e('hero_secure_title'); ?></h3>
+                    <p><?php _e('hero_secure_desc'); ?></p>
                 </div>
             </div>
         </div>
@@ -54,8 +54,8 @@
 <section class="services" id="services">
     <div class="container">
         <div class="section-header">
-            <h2>Our Loan Services</h2>
-            <p>Choose from our wide range of loan products tailored to your needs</p>
+            <h2><?php _e('services_title'); ?></h2>
+            <p><?php _e('services_subtitle'); ?></p>
         </div>
         <div class="services-grid">
             <?php 
@@ -74,7 +74,7 @@
             ?>
             <div class="service-card <?php echo $is_featured ? 'featured' : ''; ?>">
                 <?php if ($is_featured): ?>
-                <div class="badge">Most Popular</div>
+                <div class="badge"><?php _e('service_most_popular'); ?></div>
                 <?php endif; ?>
                 <div class="service-icon">
                     <i class="fas <?php echo $icon; ?>"></i>
@@ -95,7 +95,7 @@
             else:
             ?>
             <div class="empty-state">
-                <p>No loan products available at the moment.</p>
+                <p><?php _e('service_no_products'); ?></p>
             </div>
             <?php endif; ?>
         </div>
@@ -220,7 +220,7 @@
                     <div class="calculator-result">
                         <h3><?php _e('calculator_monthly'); ?></h3>
                         <div class="monthly-payment" id="monthlyPayment">RM 909</div>
-                        <p class="result-note">*This is an estimate. Actual repayment may vary.</p>
+                        <p class="result-note"><?php _e('calculator_note'); ?></p>
                     </div>
                 </div>
             </div>

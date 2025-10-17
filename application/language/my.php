@@ -23,6 +23,8 @@ return [
     'hero_description' => 'Rakan terpercaya anda untuk pinjaman peribadi, perniagaan, rumah dan kereta. Mohon dalam talian dalam beberapa minit dan dapatkan kelulusan dalam masa 24 jam.',
     'hero_cta' => 'Mohon Sekarang',
     'hero_learn_more' => 'Ketahui Lebih Lanjut',
+    'hero_secure_title' => '100% Selamat',
+    'hero_secure_desc' => 'Data anda dilindungi dengan enkripsi peringkat bank',
     
     // Features
     'features_title' => 'Mengapa Pilih Kami',
@@ -38,6 +40,8 @@ return [
     // Services
     'services_title' => 'Perkhidmatan Pinjaman Kami',
     'services_subtitle' => 'Kami menawarkan pelbagai produk pinjaman untuk memenuhi keperluan kewangan anda',
+    'service_most_popular' => 'Paling Popular',
+    'service_no_products' => 'Tiada produk pinjaman tersedia pada masa ini.',
     'service_personal' => 'Pinjaman Peribadi',
     'service_personal_desc' => 'Wang pantas untuk keperluan peribadi anda',
     'service_business' => 'Pinjaman Perniagaan',
@@ -59,6 +63,7 @@ return [
     'calculator_monthly' => 'Bayaran Bulanan',
     'calculator_total' => 'Jumlah Bayaran',
     'calculator_total_interest' => 'Jumlah Faedah',
+    'calculator_note' => '*Ini adalah anggaran. Bayaran balik sebenar mungkin berbeza.',
     
     // Application Form
     'form_title' => 'Mohon Pinjaman',
