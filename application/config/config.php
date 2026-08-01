@@ -1,10 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// Auto-detect base URL for XAMPP and other environments
-$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
-$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+// Base URL Configuration
+$config['base_url'] = 'https://paynow.betkina.com/';
 $config['index_page'] = 'index.php';
 $config['uri_protocol'] = 'REQUEST_URI';
 $config['url_suffix'] = '';
@@ -36,10 +34,10 @@ $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix'] = '';
-$config['cookie_domain'] = '';
+$config['cookie_domain'] = '.betkina.com';
 $config['cookie_path'] = '/';
-$config['cookie_secure'] = FALSE;
-$config['cookie_httponly'] = FALSE;
+$config['cookie_secure'] = TRUE;
+$config['cookie_httponly'] = TRUE;
 $config['standardize_newlines'] = FALSE;
 $config['global_xss_filtering'] = FALSE;
 $config['csrf_protection'] = FALSE;

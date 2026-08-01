@@ -23,6 +23,8 @@ return [
     'hero_description' => 'Your trusted partner for personal, business, home, and car loans. Apply online in minutes and get approval within 24 hours.',
     'hero_cta' => 'Apply Now',
     'hero_learn_more' => 'Learn More',
+    'hero_secure_title' => '100% Secure',
+    'hero_secure_desc' => 'Your data is protected with bank-level encryption',
     
     // Features
     'features_title' => 'Why Choose Us',
@@ -38,6 +40,8 @@ return [
     // Services
     'services_title' => 'Our Loan Services',
     'services_subtitle' => 'We offer a wide range of loan products to meet your financial needs',
+    'service_most_popular' => 'Most Popular',
+    'service_no_products' => 'No loan products available at the moment.',
     'service_personal' => 'Personal Loan',
     'service_personal_desc' => 'Quick cash for your personal needs',
     'service_business' => 'Business Loan',
@@ -59,6 +63,7 @@ return [
     'calculator_monthly' => 'Monthly Payment',
     'calculator_total' => 'Total Payment',
     'calculator_total_interest' => 'Total Interest',
+    'calculator_note' => '*This is an estimate. Actual repayment may vary.',
     
     // Application Form
     'form_title' => 'Apply for a Loan',

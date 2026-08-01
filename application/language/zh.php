@@ -23,6 +23,8 @@ return [
     'hero_description' => '您值得信赖的个人、商业、房屋和汽车贷款合作伙伴。几分钟内在线申请，24小时内获得批准。',
     'hero_cta' => '立即申请',
     'hero_learn_more' => '了解更多',
+    'hero_secure_title' => '100% 安全',
+    'hero_secure_desc' => '您的数据受银行级加密保护',
     
     // Features
     'features_title' => '为什么选择我们',
@@ -38,6 +40,8 @@ return [
     // Services
     'services_title' => '我们的贷款服务',
     'services_subtitle' => '我们提供多种贷款产品以满足您的财务需求',
+    'service_most_popular' => '最受欢迎',
+    'service_no_products' => '目前没有可用的贷款产品。',
     'service_personal' => '个人贷款',
     'service_personal_desc' => '满足您个人需求的快速现金',
     'service_business' => '商业贷款',
@@ -59,6 +63,7 @@ return [
     'calculator_monthly' => '每月付款',
     'calculator_total' => '总付款',
     'calculator_total_interest' => '总利息',
+    'calculator_note' => '*这是一个估算。实际还款可能有所不同。',
     
     // Application Form
     'form_title' => '申请贷款',
