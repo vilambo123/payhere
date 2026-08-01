@@ -1,4 +1,14 @@
 RewriteEngine On
+
+# Exclude static assets from rewriting
+RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|pdf|zip|mp4|webm|mp3)$ [NC]
+RewriteRule ^ - [L]
+
+# Exclude public directory from rewriting
+RewriteCond %{REQUEST_URI} ^/public/ [NC]
+RewriteRule ^ - [L]
+
+# Rewrite all other requests to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]

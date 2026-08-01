@@ -91,7 +91,17 @@ class CI_Loader {
 // Helper functions
 function base_url($uri = '') {
     global $config;
-    $base = rtrim($config['base_url'], '/');
+    
+    // Auto-detect base URL from current request
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $script_name = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
+    $base_path = str_replace(basename($script_name), '', $script_name);
+    $base_path = rtrim($base_path, '/');
+    
+    // Use detected base URL instead of hardcoded config
+    $base = $protocol . $host . $base_path;
+    
     if (empty($uri)) {
         return $base . '/';
     }
